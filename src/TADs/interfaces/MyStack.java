@@ -1,12 +1,14 @@
 package TADs.interfaces;
 
+import exceptions.EmptyyStackException;
+
 import java.util.EmptyStackException;
 
 public interface MyStack<T> {
 
-	void pop() throws EmptyStackException;
+	void pop() throws EmptyyStackException;
 
-	T top() throws EmptyStackException;
+	T top() throws EmptyyStackException;
 
 	void push(T element);
 
