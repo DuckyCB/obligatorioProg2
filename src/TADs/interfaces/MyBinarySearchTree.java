@@ -1,10 +1,12 @@
 package TADs.interfaces;
 
 import TADs.implementations.LinkedList;
+import exceptions.EmptyTreeException;
+import exceptions.KeyNotFoundException;
 
 public interface MyBinarySearchTree<K extends Comparable<K>, T> {
 
-	T find(K key);
+	T find(K key) throws EmptyTreeException, KeyNotFoundException;
 
 	void insert(K key, T data);
 
