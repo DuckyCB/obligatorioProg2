@@ -11,23 +11,31 @@ public class LinkedList<T> implements MyList<T> {
 
 	public Node<T> goToPosition(int position) throws InvalidInformationException {
 
-		Node<T> node = first;
+		if (first != null) {
 
-		for (int i = 0; i < position; i++) {
+			Node<T> node = first;
 
-			if (node.getNext() != null) {
+			for (int i = 0; i < position; i++) {
 
-				node = node.getNext();
+				if (node.getNext() != null) {
 
-			} else {
+					node = node.getNext();
 
-				throw new InvalidInformationException();
+				} else {
+
+					throw new InvalidInformationException();
+
+				}
 
 			}
 
-		}
+			return node;
 
-		return node;
+		} else {
+
+			throw new InvalidInformationException();
+
+		}
 
 	}
 
@@ -62,7 +70,15 @@ public class LinkedList<T> implements MyList<T> {
 
 		if (position == 0) {
 
-			first = null;
+			if (first != null) {
+
+				first = null;
+
+			} else {
+
+				throw new InvalidInformationException();
+
+			}
 
 		} else if (position >= 1) {
 
