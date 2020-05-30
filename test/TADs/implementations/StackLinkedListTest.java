@@ -25,4 +25,5 @@ public class StackLinkedListTest {
 	@Test
 	public void makeEmpty() {
 	}
+
 }
