@@ -1,7 +1,9 @@
 package TADs.implementations;
 
+import TADs.implementations.utils.BinaryTreeMethods;
 import TADs.interfaces.MyBinarySearchTree;
 import TADs.nodes.NodeBT;
+import exceptions.DuplicatedKeyException;
 import exceptions.EmptyTreeException;
 import exceptions.KeyNotFoundException;
 
@@ -44,6 +46,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 			throw new EmptyTreeException();
 
 		}
+
 	}
 
 	@Override
@@ -64,46 +67,149 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 			return parent.getRightChild().getData();
 
 		}
-			return parent.getRightChild().getData();
+		return parent.getRightChild().getData();
 
 	}
 
 	@Override
-	public void insert(K key, T data) {
+	public void insert(K key, T data) throws DuplicatedKeyException {
 
 		NodeBT<K, T> newNode = new NodeBT<>(key, data);
 		NodeBT<K, T> node = root;
 
-		NodeBT<K, T> actual = root;
+		if (root != null) {
 
-		while (actual != null) {
+			NodeBT<K, T> parent = searchParentToInsert(key, root);
 
-			if (actual.getKey().compareTo(key) == 0) {
+			if (parent.getKey().compareTo(key) < 0) {
 
-				throw new DuplicatedKeyException();
-
-			} else if (actual.getKey().compareTo(key) < 0) {
-
-				if (actual.getLeftChild() != null) {
-
-					actual = actual.getLeftChild();
-
-				} else {
-
-					NodeBT<K, T> newNode = new NodeBT<>(key, data);
-					actual.setLeftChild(newNode);
-				}
+				parent.setLeftChild(newNode);
 
 			} else {
 
-				if (actual.getRightChild() != null) {
+				parent.setRightChild(newNode);
 
-					actual = actual.getRightChild();
+			}
+
+		} else {
+
+			root = newNode;
+
+		}
+
+	}
+
+	// No se puede mandar un nodo null
+	private NodeBT<K, T> searchParentToInsert(K key, NodeBT<K, T> parent) throws DuplicatedKeyException {
+
+		if (parent.getKey().compareTo(key) < 0) {
+
+			if (parent.getLeftChild() != null) {
+
+				if (parent.getLeftChild().getKey().compareTo(key) == 0) {
+
+					throw new DuplicatedKeyException();
 
 				} else {
 
-					NodeBT<K, T> newNode = new NodeBT<>(key, data);
-					actual.setRightChild(newNode);
+					return searchParentToInsert(key, parent.getLeftChild());
+
+				}
+
+			}
+
+		} else { // if (parent.getKey().compareTo(key) > 0) {
+
+			if (parent.getRightChild() != null) {
+
+				if (parent.getRightChild().getKey().compareTo(key) == 0) {
+
+					throw new DuplicatedKeyException();
+
+				} else {
+
+					return searchParentToInsert(key, parent.getRightChild());
+
+				}
+
+			}
+
+		}
+
+		return parent;
+
+	}
+
+	@Override
+	public void delete(K key) throws EmptyTreeException, KeyNotFoundException {
+
+		NodeBT<K, T> parent = searchParentOfKey(key);
+
+		if (parent.getLeftChild() != null) {
+
+			if (parent.getLeftChild().getKey().equals(key)) {
+
+				NodeBT<K, T> toDelete = parent.getLeftChild();
+
+				if (toDelete.getLeftChild() != null) {
+
+					NodeBT<K, T> parentOfMaxLeftChild = toDelete.getLeftChild();
+
+					if (parentOfMaxLeftChild.getRightChild() != null) {
+
+						while (parentOfMaxLeftChild.getRightChild().getRightChild() != null) {
+
+							parentOfMaxLeftChild = parentOfMaxLeftChild.getRightChild();
+
+						}
+
+						parent.setLeftChild(parentOfMaxLeftChild.getRightChild());
+						parentOfMaxLeftChild.setRightChild(null);
+
+					} else {
+
+						parent.setLeftChild(parentOfMaxLeftChild);
+
+					}
+
+					parent.getLeftChild().setLeftChild(toDelete.getLeftChild());
+					parent.getLeftChild().setRightChild(toDelete.getRightChild());
+
+				}
+
+			}
+
+		}
+
+		if (parent.getRightChild() != null) {
+
+			if (parent.getRightChild().getKey().equals(key)) {
+
+				NodeBT<K, T> toDelete = parent.getRightChild();
+
+				if (toDelete.getRightChild() != null) {
+
+					NodeBT<K, T> parentOfMaxLeftChild = toDelete.getLeftChild();
+
+					if (parentOfMaxLeftChild.getRightChild() != null) {
+
+						while (parentOfMaxLeftChild.getRightChild().getRightChild() != null) {
+
+							parentOfMaxLeftChild = parentOfMaxLeftChild.getRightChild();
+
+						}
+
+						parent.setRightChild(parentOfMaxLeftChild.getRightChild());
+						parentOfMaxLeftChild.setRightChild(null);
+
+					} else {
+
+						parent.setRightChild(parentOfMaxLeftChild);
+
+					}
+
+					parent.getRightChild().setLeftChild(toDelete.getLeftChild());
+					parent.getRightChild().setRightChild(toDelete.getRightChild());
 
 				}
 
@@ -113,43 +219,39 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 
 	}
 
-	private NodeBT<K, T> searchParentToInsert(K key) {
-
-		if ()
-
-	}
-
-	@Override
-	public void delete(K key) {
-
-	}
-
 	@Override
 	public int size() {
-		return 0;
+
+		return BinaryTreeMethods.size(root);
+
 	}
+
 
 	@Override
 	public int countLeaf() {
-		return 0;
+
+		return BinaryTreeMethods.countLeaf(root);
+
 	}
 
 	@Override
 	public int countCompleteElements() {
-		return 0;
+
+		return BinaryTreeMethods.countCompleteElements(root);
+
 	}
 
-	@Override
+	@Override // Falta
 	public LinkedList<K> inOrder() {
 		return null;
 	}
 
-	@Override
+	@Override // Falta
 	public LinkedList<K> preOrder() {
 		return null;
 	}
 
-	@Override
+	@Override // Falta
 	public LinkedList<K> postOrder() {
 		return null;
 	}

@@ -1,6 +1,7 @@
 package TADs.interfaces;
 
 import TADs.implementations.LinkedList;
+import exceptions.DuplicatedKeyException;
 import exceptions.EmptyTreeException;
 import exceptions.KeyNotFoundException;
 
@@ -8,9 +9,9 @@ public interface MyBinarySearchTree<K extends Comparable<K>, T> {
 
 	T find(K key) throws EmptyTreeException, KeyNotFoundException;
 
-	void insert(K key, T data);
+	void insert(K key, T data) throws DuplicatedKeyException;
 
-	void delete(K key);
+	void delete(K key) throws EmptyTreeException, KeyNotFoundException;
 
 	int size();
 
@@ -18,11 +19,10 @@ public interface MyBinarySearchTree<K extends Comparable<K>, T> {
 
 	int countCompleteElements();
 
-	LinkedList<K> inOrder();
+	LinkedList<K> inOrder(); // Falta
 
-	LinkedList<K> preOrder();
+	LinkedList<K> preOrder(); // Falta
 
-	LinkedList<K> postOrder();
-
+	LinkedList<K> postOrder(); // Falta
 
 }

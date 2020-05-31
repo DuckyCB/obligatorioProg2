@@ -21,12 +21,12 @@ public interface MyTree<K extends Comparable<K>, T> {
 
 	int countCompleteElements();
 
-	LinkedList<NodeBT<K, T>> inOrder() throws EmptyTreeException;
+	LinkedList<NodeBT<K, T>> inOrder() throws EmptyTreeException; // Falta terminar
 
-	LinkedList<NodeBT<K, T>> preOrder() throws EmptyTreeException;
+	LinkedList<NodeBT<K, T>> preOrder() throws EmptyTreeException; // Falta terminar
 
-	LinkedList<NodeBT<K, T>> postOrder() throws EmptyTreeException;
+	LinkedList<NodeBT<K, T>> postOrder() throws EmptyTreeException; // Falta terminar
 
-	LinkedList<NodeBT<K, T>> byLevel() throws EmptyTreeException;
+	LinkedList<NodeBT<K, T>> byLevel() throws EmptyTreeException; // Falta terminar
 
 }

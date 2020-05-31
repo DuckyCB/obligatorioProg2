@@ -2,14 +2,29 @@ package TADs.implementations;
 
 import TADs.interfaces.MyBinaryCompleteTree;
 
-public class BinaryCompleteTree<K extends Comparable<K>, T> implements MyBinaryCompleteTree<K, T> {
-	@Override
-	public void insert(T data) {
+import java.util.ArrayList;
+
+public class BinaryCompleteTree<T> implements MyBinaryCompleteTree<T> {
+
+	private ArrayList<T> values;
+
+	public BinaryCompleteTree(){
+
+		this.values=new ArrayList<>();
 
 	}
 
-	@Override
-	public void delete(K key) {
+	@Override // Sin verificar
+	public void insert(T data) {
+
+		values.add(data);
+
+	}
+
+	@Override // Sin verificar
+	public void delete(T data) {
+
+		values.remove(data);
 
 	}
 }

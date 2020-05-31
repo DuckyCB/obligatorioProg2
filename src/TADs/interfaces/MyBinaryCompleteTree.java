@@ -1,9 +1,9 @@
 package TADs.interfaces;
 
-public interface MyBinaryCompleteTree<K extends Comparable<K>, T> {
+public interface MyBinaryCompleteTree<T> {
 
-	void insert(T data);
+	void insert(T data); // Sin verificar
 
-	void delete(K key);
+	void delete(T data); // Sin verificar
 
 }

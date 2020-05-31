@@ -1,5 +1,6 @@
 package TADs.implementations;
 
+import TADs.implementations.utils.BinaryTreeMethods;
 import TADs.interfaces.MyTree;
 import TADs.nodes.NodeBT;
 import exceptions.EmptyTreeException;
@@ -27,37 +28,20 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 
 			}
 
-			NodeBT<K, T> rightNode = searchByKey(key, node.getRightChild());
-
-			if (rightNode != null) {
-
-				return rightNode;
-
-			}
+			return searchByKey(key, node.getRightChild());
 
 		} else if (node.getLeftChild() != null) {
 
-			NodeBT<K, T> leftNode = searchByKey(key, node.getLeftChild());
-
-			if (leftNode != null) {
-
-				return leftNode;
-
-			}
+			return searchByKey(key, node.getLeftChild());
 
 		} else if (node.getRightChild() != null) {
 
-			NodeBT<K, T> rightNode = searchByKey(key, node.getRightChild());
-
-			if (rightNode != null) {
-
-				return rightNode;
-
-			}
+			return searchByKey(key, node.getRightChild());
 
 		}
 
 		return null;
+
 	}
 
 
@@ -154,122 +138,26 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 	@Override
 	public int size() {
 
-		int size = 0;
-
-		if (root != null) {
-
-			return size(root, size);
-
-		} else {
-
-			return size;
-		}
+		return BinaryTreeMethods.size(root);
 
 	}
 
-	private int size(NodeBT<K, T> node, int size) {
-
-		if (node.getLeftChild() != null && node.getRightChild() != null) {
-
-			return size + 2 + size(node.getLeftChild(), size) + size(node.getRightChild(), size);
-
-		} else if (node.getLeftChild() != null) {
-
-			return size + 1 + size(node.getLeftChild(), size);
-
-		} else if (node.getRightChild() != null) {
-
-			return size + 1 + size(node.getRightChild(), size);
-
-		} else {
-
-			return size;
-
-		}
-
-	}
 
 	@Override
 	public int countLeaf() {
 
-		int leaves = 0;
-
-		if (root != null) {
-
-			return countLeaf(root, leaves);
-
-		} else {
-
-			return leaves;
-
-		}
-
-	}
-
-	private int countLeaf(NodeBT<K, T> node, int leaves) {
-
-		if (node.getLeftChild() == null && node.getRightChild() == null) {
-
-			return leaves + 1;
-
-		} else if (node.getLeftChild() != null && node.getRightChild() != null) {
-
-			return leaves + countLeaf(node.getLeftChild(), leaves)
-					+ countLeaf(node.getRightChild(), leaves);
-
-		} else if (node.getLeftChild() != null) {
-
-			return leaves + countLeaf(node.getLeftChild(), leaves);
-
-		} else { // if (node.getRightChild() != null) {
-
-			return leaves + countLeaf(node.getRightChild(), leaves);
-
-		}
+		return BinaryTreeMethods.countLeaf(root);
 
 	}
 
 	@Override
 	public int countCompleteElements() {
 
-		int count = 0;
-
-		if (root != null) {
-
-			return countCompleteElements(root, count);
-
-		} else {
-
-			return count;
-
-		}
+		return BinaryTreeMethods.countCompleteElements(root);
 
 	}
 
-	private int countCompleteElements(NodeBT<K, T> node, int count) {
 
-		count++;
-
-		if (node.getLeftChild() != null && node.getRightChild() != null) {
-
-			return count + countCompleteElements(node.getLeftChild(), count)
-					+ countCompleteElements(node.getRightChild(), count);
-
-		} else if (node.getLeftChild() != null) {
-
-			return count + countCompleteElements(node.getLeftChild(), count);
-
-		} else if (node.getRightChild() != null) {
-
-			return count + countCompleteElements(node.getRightChild(), count);
-
-		} else { // if (node.getLeftChild() == null && node.getRightChild() == null) {
-
-			return count;
-
-		}
-
-	}
 
 	@Override // Falta terminar
 	public LinkedList<NodeBT<K, T>> inOrder() throws EmptyTreeException {
