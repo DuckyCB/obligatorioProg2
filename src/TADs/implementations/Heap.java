@@ -18,6 +18,12 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 
 	}
 
+	public int getLast(){
+
+		return last;
+
+	}
+
 	@Override
 	public void insert(T value) {
 

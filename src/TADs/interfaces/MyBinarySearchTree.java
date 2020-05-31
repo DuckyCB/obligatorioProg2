@@ -1,6 +1,7 @@
 package TADs.interfaces;
 
 import TADs.implementations.LinkedList;
+import TADs.nodes.NodeBT;
 import exceptions.DuplicatedKeyException;
 import exceptions.EmptyTreeException;
 import exceptions.KeyNotFoundException;
@@ -19,10 +20,10 @@ public interface MyBinarySearchTree<K extends Comparable<K>, T> {
 
 	int countCompleteElements();
 
-	LinkedList<K> inOrder(); // Falta
+	LinkedList<NodeBT<K, T>> inOrder(); // Falta probar
 
-	LinkedList<K> preOrder(); // Falta
+	LinkedList<NodeBT<K, T>> preOrder(); // Falta probar
 
-	LinkedList<K> postOrder(); // Falta
+	LinkedList<NodeBT<K, T>> postOrder(); // Falta probar
 
 }

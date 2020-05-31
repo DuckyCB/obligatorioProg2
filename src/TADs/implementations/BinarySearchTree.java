@@ -221,7 +221,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 
 	@Override
 	public int size() {
-
+		int size=0;
 		return BinaryTreeMethods.size(root);
 
 	}
@@ -241,18 +241,74 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 
 	}
 
-	@Override // Falta
-	public LinkedList<K> inOrder() {
-		return null;
+	@Override
+	public LinkedList<NodeBT<K, T>> preOrder() {
+
+		LinkedList<NodeBT<K, T>> toReturn = new LinkedList<>();
+		toReturn = rPreOrder(root, toReturn);
+
+		return toReturn;
 	}
 
-	@Override // Falta
-	public LinkedList<K> preOrder() {
-		return null;
+	private LinkedList<NodeBT<K, T>> rPreOrder(NodeBT<K, T> tRoot, LinkedList<NodeBT<K, T>> toReturn) {
+
+		toReturn.add(tRoot);
+
+		if (tRoot.getLeftChild() != null) {
+			rPreOrder(tRoot.getLeftChild(), toReturn);
+		}
+
+		if (tRoot.getRightChild() != null) {
+			rPreOrder(tRoot.getRightChild(), toReturn);
+		}
+		return toReturn;
 	}
 
-	@Override // Falta
-	public LinkedList<K> postOrder() {
-		return null;
+	@Override
+	public LinkedList<NodeBT<K, T>> inOrder() {
+
+		LinkedList<NodeBT<K, T>> toReturn = new LinkedList<>();
+		rInOrder(root, toReturn);
+
+		return toReturn;
+	}
+
+	private LinkedList<NodeBT<K, T>> rInOrder(NodeBT<K, T> tRoot, LinkedList<NodeBT<K, T>> toReturn) {
+
+		if (tRoot.getLeftChild() != null) {
+			rInOrder(tRoot.getLeftChild(), toReturn);
+		}
+
+		toReturn.add(tRoot);
+
+		if (tRoot.getRightChild() != null) {
+			rInOrder(tRoot.getRightChild(), toReturn);
+		}
+
+		return toReturn;
+	}
+
+
+	@Override
+	public LinkedList<NodeBT<K, T>> postOrder() {
+
+		LinkedList<NodeBT<K, T>> toReturn = new LinkedList<>();
+		toReturn = rPostOrder(root, toReturn);
+
+		return toReturn;
+	}
+
+	private LinkedList<NodeBT<K, T>> rPostOrder(NodeBT<K, T> tRoot, LinkedList<NodeBT<K, T>> toReturn) {
+
+		if (tRoot.getLeftChild() != null) {
+			rPostOrder(tRoot.getLeftChild(), toReturn);
+		}
+
+		if (tRoot.getRightChild() != null) {
+			rPostOrder(tRoot.getRightChild(), toReturn);
+		}
+
+		toReturn.add(tRoot);
+		return toReturn;
 	}
 }
