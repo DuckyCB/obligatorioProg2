@@ -11,8 +11,6 @@ public class BinarySearchTreeTest {
 
     @Test
     public void find(){
-        //	NO FUNCIONARON LOS TESTS
-
         BinarySearchTree<Integer,String> prueba= new BinarySearchTree();
 
         try {
@@ -42,7 +40,7 @@ public class BinarySearchTreeTest {
             prueba.insert(1, "A");
             prueba.insert(3, "C");
 
-            assertEquals(prueba.size(), 3);
+            assertEquals(prueba.size(), 5);
 
 
         } catch (DuplicatedKeyException e) {
@@ -101,7 +99,7 @@ public class BinarySearchTreeTest {
             prueba.insert(14, "B");
             prueba.insert(8, "*");
             prueba.insert(1, "A");
-            prueba.insert(3, "C");
+            prueba.insert(9, "C");
 
             assertEquals(prueba.countLeaf(), 3);
         } catch (DuplicatedKeyException e) {

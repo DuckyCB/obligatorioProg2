@@ -8,6 +8,7 @@ public class LinkedList<T> implements MyList<T> {
 
 	private Node<T> first;
 
+	private int size=0;
 
 	public Node<T> goToPosition(int position) throws InvalidInformationException {
 
@@ -62,6 +63,8 @@ public class LinkedList<T> implements MyList<T> {
 			first = newNode;
 
 		}
+
+		size=size+1;
 
 	}
 
@@ -119,6 +122,8 @@ public class LinkedList<T> implements MyList<T> {
 
 		}
 
+		size=size-1;
+
 	}
 
 	@Override
@@ -136,6 +141,12 @@ public class LinkedList<T> implements MyList<T> {
 
 		}
 
+
+	}
+
+	public int getSize(){
+
+		return size;
 
 	}
 

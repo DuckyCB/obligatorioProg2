@@ -222,6 +222,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> implements MyBinarySea
 	@Override
 	public int size() {
 		int size=0;
+
 		return BinaryTreeMethods.size(root);
 
 	}

@@ -25,7 +25,7 @@ public class BinaryCompleteTree<T> implements MyBinaryCompleteTree<T> {
 	public void delete(T data) {
 
 		values.remove(data);
-
+        
 	}
 
 	public String toString (){

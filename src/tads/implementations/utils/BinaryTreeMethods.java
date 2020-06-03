@@ -10,7 +10,7 @@ public class BinaryTreeMethods {
 
 		if (root != null) {
 
-			return size(root, size);
+			return (size(root, size)+1);
 
 		} else {
 
@@ -100,11 +100,9 @@ public class BinaryTreeMethods {
 
 	private static <K extends Comparable<K>, T> int countCompleteElements(NodeBT<K, T> node, int count) {
 
-		count++;
-
 		if (node.getLeftChild() != null && node.getRightChild() != null) {
 
-			return count + countCompleteElements(node.getLeftChild(), count)
+			return count + 1 + countCompleteElements(node.getLeftChild(), count)
 					+ countCompleteElements(node.getRightChild(), count);
 
 		} else if (node.getLeftChild() != null) {
