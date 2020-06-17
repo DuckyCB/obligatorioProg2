@@ -9,11 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Menu {
 
 	public static void mainMenu() {
 
+		System.out.println("----- Menu principal -----");
 		System.out.println("Seleccione la opción que desee :\n");
 		System.out.println(" 1. Carga de datos");
 		System.out.println(" 2. Ejecutar consultas");
@@ -26,7 +29,7 @@ public class Menu {
 		switch (option) {
 			case "1":
 
-				loadData();
+				loadData.timeDataLoad();
 
 				break;
 			case "2":
@@ -48,62 +51,6 @@ public class Menu {
 
 	}
 
-	private static void loadData() {
-
-		double start = System.nanoTime() / 1000000;
-
-		List<Book> books = readBooksFromCSV("D:/Documentos/GitHub/obligatorioProg2/src/books.txt");
-
-		double elapsedTime = System.nanoTime() / 1000000 - start;
-		System.out.print("Carga de datos exitosa, tiempo de ejecución de la carga : ");
-		System.out.println(elapsedTime);
-
-	}
-
-	private static List<Book> readBooksFromCSV(String fileName) {
-
-		List<Book> books = new LinkedList<>();
-		Path pathToFile = Paths.get(fileName);
-
-		// create an instance of BufferedReader
-		// using try with resource, Java 7 feature to close resources
-		try (BufferedReader br = Files.newBufferedReader(pathToFile)) {
-
-			// read the first line from the text file
-			String line = br.readLine();
-			line = br.readLine();
-			// loop until all lines are read
-
-
-			while (line != null) {
-
-				// use string.split to load a string array with the values from
-				// each line of
-				// the file, using a comma as the delimiter
-				String[] attributes = line.split(",");
-				attributes[1] = attributes[1].substring(1, attributes[1].length()-1);
-				attributes[1] = attributes[1].substring(1, attributes[1].length()-1);
-
-				Book book = new Book(attributes[1], attributes[2], attributes[3], attributes[4], attributes[5], attributes[6], attributes[7]);
-
-				// adding book into ArrayList
-				books.add(book);
-
-				// read next line before looping
-				// if end of file reached, line would be null
-				line = br.readLine();
-
-			}
-
-		} catch (IOException ioe) {
-
-			ioe.printStackTrace();
-
-		}
-
-		return books;
-
-	}
 
 	private static void runQueries() {
 

@@ -2,15 +2,15 @@ package entities;
 
 public class Book {
 
-	String book_id;
+	long book_id;
 	String isbn;
-	String original_publication_year;
+	int original_publication_year;
 	String original_title;
 	String title;
 	String language_code;
 	String image_url;
 
-	public Book(String book_id, String isbn, String original_publication_year, String original_title, String title, String language_code, String image_url) {
+	public Book(long book_id, String isbn, int original_publication_year, String original_title, String title, String language_code, String image_url) {
 		this.book_id = book_id;
 		this.isbn = isbn;
 		this.original_publication_year = original_publication_year;
