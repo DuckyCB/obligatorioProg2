@@ -1,15 +1,11 @@
 package entities;
 
-import tads.implementations.LinkedList;
+public class Author{
 
-public class Author<Books> {
+	private String name;
 
-	String name;
-	LinkedList<Books> booksList;
-
-	public Author(String name, LinkedList<Books> booksList) {
+	public Author(String name) {
 		this.name = name;
-		this.booksList = booksList;
 	}
 
 }

@@ -2,25 +2,28 @@ package main;
 
 import entities.Author;
 import entities.Book;
+import exceptions.FullHashException;
 import exceptions.InvalidInformationException;
+import tads.implementations.ClosedHash;
 import tads.implementations.OpenHash;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
-import java.util.List;
 
 public class loadData {
+
+	private static ClosedHash<Integer, Book> books = new ClosedHash<>(10001);
+	private static OpenHash<Integer, Author> authors = new OpenHash<>(26); // Letras abecedario
 
 	public static void timeDataLoad() {
 
 		double startTime = System.currentTimeMillis();
 
-		OpenHash<Integer, Book> books = readBooksFromCSV("books.csv");
-		OpenHash<Integer, Book> ratings = readBooksFromCSV("ratings.csv");
-		OpenHash<Integer, Book> to_read = readBooksFromCSV("to_read.csv");
+		readBooksFromCSV("books.csv");
+		readBooksFromCSV("ratings.csv");
+		readBooksFromCSV("to_read.csv");
 
 		double elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.print("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
@@ -28,9 +31,7 @@ public class loadData {
 	}
 
 	// Carga con Buffer
-	private static OpenHash<Integer, Book> readBooksFromCSV(String fileName) {
-
-		OpenHash<Integer, Book> books = new OpenHash<>(100000); // Cambiar este valor luego
+	private static void readBooksFromCSV(String fileName) {
 
 		try ( BufferedReader br = Files.newBufferedReader(Paths.get(fileName)) ) {
 
@@ -40,14 +41,34 @@ public class loadData {
 
 				String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 				int n = attributes.length;
-				Book book = new Book( Long.parseLong(attributes[0]), attributes[1],
+				Author[] authorsArray = new Author[n-7];
+
+				for (int i = 0; i < n - 7; i++) {
+
+					Author newAuthor = new Author(attributes[2+i]);
+
+					// Agregar autores en alguna estructura
+
+				}
+
+				Book book = new Book( Long.parseLong(attributes[0]), attributes[1], authorsArray,
 						Integer.parseInt(attributes[n-5]), attributes[n-4], attributes[n-3], attributes[n-2],
 						attributes[n-1]);
+
 				// Verificar que el autor no este repetido
 				// Agregar libro a la lista de libros del autor
 				// Author author = new Author();
 				// Falta agregar un hash o algo de autores
-				books.put(Integer.parseInt(attributes[0]), book);
+
+				try {
+
+					books.put(Integer.parseInt(attributes[0]), book);
+
+				} catch (FullHashException e) { // Creo que falta otra exception
+
+					e.printStackTrace();
+
+				}
 
 				line = br.readLine();
 
@@ -58,8 +79,6 @@ public class loadData {
 			ioe.printStackTrace();
 
 		}
-
-		return books;
 
 	}
 

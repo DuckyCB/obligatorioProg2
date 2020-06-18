@@ -3,13 +3,11 @@ package tads.nodes;
 public class HashNode<K,T> {
 
     private K key;
-
     private T value;
 
     public HashNode(K key, T value){
 
         this.key=key;
-
         this.value=value;
 
     }
