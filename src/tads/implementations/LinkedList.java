@@ -7,7 +7,6 @@ import exceptions.InvalidInformationException;
 public class LinkedList<T> implements MyList<T> {
 
 	private Node<T> first;
-
 	private int size=0;
 
 	public Node<T> goToPosition(int position) throws InvalidInformationException {
