@@ -17,7 +17,7 @@ public class OpenHashTest {
             prueba.put(2, "c");
             prueba.put(5,"aa");
             prueba.put(3, "d");
-            assertEquals(prueba.size,4);
+            assertEquals(prueba.getSize(),5);
         }catch(InvalidInformationException e){
             fail();
         }
@@ -48,7 +48,7 @@ public class OpenHashTest {
             prueba.put(4, "a");
             prueba.put(5, "b");
 
-            assertEquals(prueba.size,2);
+            assertEquals(prueba.getSize(),2);
         }catch(InvalidInformationException e){
             fail();
         }

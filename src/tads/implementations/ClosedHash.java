@@ -15,7 +15,8 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 	public ClosedHash(int hashSize) {
 
 		this.hash = new HashNode[hashSize];
-		this.size = hashSize;
+		this.hashSize = hashSize;
+		int size=0;
 
 	}
 
@@ -31,16 +32,17 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 
 		while (hash[place] != null) {
 
+			if (hash[place]!= null) if (hash[place].getKey().equals(key)) throw new InvalidInformationException();
 			place++;
 			if (place >= hashSize) place = 0;
 			if (place == ( (Integer) key ) % hashSize) throw new FullHashException();
 				// Solo llega a esto si recorre todos los espacios y no hay libre
 				// O bien se podria crear un nuevo hash de mayor size
-			if (hash[place].getKey().equals(key)) throw new InvalidInformationException();
 
 		}
 
 		hash[place] = new HashNode<>(key, value);
+		size++;
 
 	}
 

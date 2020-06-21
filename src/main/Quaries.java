@@ -41,6 +41,7 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
+		HashNode<Integer, Book>[] temp = Data.getBooks().getHash();
 
 
 
