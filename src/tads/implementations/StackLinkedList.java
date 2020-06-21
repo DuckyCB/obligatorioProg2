@@ -12,31 +12,16 @@ public class StackLinkedList<T> implements MyStack<T> {
 	@Override
 	public void pop() throws EmptyyStackException {
 
-		if (isEmpty()) {
-
-			throw new EmptyyStackException();
-
-		} else {
-
-			top = top.getNext();
-
-		}
+		if (isEmpty()) throw new EmptyyStackException();
+		top = top.getNext();
 
 	}
 
 	@Override
 	public T top() throws EmptyyStackException {
 
-		if (isEmpty()) {
-
-			throw new EmptyyStackException();
-
-		} else {
-
-			return top.getValue();
-
-		}
-
+		if (isEmpty()) throw new EmptyyStackException();
+		return top.getValue();
 
 	}
 
@@ -60,4 +45,5 @@ public class StackLinkedList<T> implements MyStack<T> {
 		top = null;
 
 	}
+
 }

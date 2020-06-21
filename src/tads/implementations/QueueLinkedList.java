@@ -32,17 +32,10 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 	@Override
 	public T dequeue() throws EmptyQueueException {
 
-		if (isEmpty()) {
-
-			throw new EmptyQueueException();
-
-		} else {
-
-			T element = first.getValue();
-			first.setNext(first.getNext());
-			return element;
-
-		}
+		if (isEmpty()) throw new EmptyQueueException();
+		T element = first.getValue();
+		first.setNext(first.getNext());
+		return element;
 
 	}
 

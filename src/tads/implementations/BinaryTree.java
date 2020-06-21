@@ -48,25 +48,10 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 	@Override
 	public T find(K key) throws EmptyTreeException, KeyNotFoundException {
 
-		if (root != null) {
-
-			NodeBT<K, T> node = searchByKey(key, root);
-
-			if (node != null) {
-
-				return node.getData();
-
-			} else {
-
-				throw new KeyNotFoundException();
-
-			}
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		NodeBT<K, T> node = searchByKey(key, root);
+		if (node == null) throw new KeyNotFoundException();
+		return node.getData();
 
 	}
 
@@ -74,37 +59,22 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 	public void insert(K key, T data, K parentKey) throws EmptyTreeException,
 			KeyNotFoundException, InvalidInformationException {
 
-		if (root != null) {
+		if (root == null) throw new EmptyTreeException();
+		NodeBT<K, T> parent = searchByKey(key, root);
+		if (parent == null) throw new KeyNotFoundException();
+		NodeBT<K, T> newNode = new NodeBT<>(key, data);
 
-			NodeBT<K, T> parent = searchByKey(key, root);
+		if (parent.getLeftChild() == null) {
 
-			if (parent != null) {
+			parent.setLeftChild(newNode);
 
-				NodeBT<K, T> newNode = new NodeBT<>(key, data);
+		} else if (parent.getRightChild() == null) {
 
-				if (parent.getLeftChild() == null) {
-
-					parent.setLeftChild(newNode);
-
-				} else if (parent.getRightChild() == null) {
-
-					parent.setRightChild(newNode);
-
-				} else {
-
-					throw new InvalidInformationException();
-
-				}
-
-			} else {
-
-				throw new KeyNotFoundException();
-
-			}
+			parent.setRightChild(newNode);
 
 		} else {
 
-			throw new EmptyTreeException();
+			throw new InvalidInformationException();
 
 		}
 
@@ -113,25 +83,10 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 	@Override
 	public void delete(K key) throws EmptyTreeException, KeyNotFoundException {
 
-		if (root != null) {
-
-			NodeBT<K, T> node = searchByKey(key, root);
-
-			if (node != null) {
-
-				node = null;
-
-			} else {
-
-				throw new KeyNotFoundException();
-
-			}
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		NodeBT<K, T> node = searchByKey(key, root);
+		if (node == null) throw new KeyNotFoundException();
+		node = null;
 
 	}
 
@@ -162,64 +117,36 @@ public class BinaryTree<K extends Comparable<K>, T> implements MyTree<K, T> {
 	@Override // Falta terminar
 	public LinkedList<NodeBT<K, T>> inOrder() throws EmptyTreeException {
 
-		if (root != null) {
-
-			LinkedList<NodeBT<K, T>> list = new LinkedList<>();
-			return list;
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		LinkedList<NodeBT<K, T>> list = new LinkedList<>();
+		return list;
 
 	}
 
 	@Override // Falta terminar
 	public LinkedList<NodeBT<K, T>> preOrder() throws EmptyTreeException {
 
-		if (root != null) {
-
-			LinkedList<NodeBT<K, T>> list = new LinkedList<>();
-			return list;
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		LinkedList<NodeBT<K, T>> list = new LinkedList<>();
+		return list;
 
 	}
 
 	@Override // Falta terminar
 	public LinkedList<NodeBT<K, T>> postOrder() throws EmptyTreeException {
 
-		if (root != null) {
-
-			LinkedList<NodeBT<K, T>> list = new LinkedList<>();
-			return list;
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		LinkedList<NodeBT<K, T>> list = new LinkedList<>();
+		return list;
 
 	}
 
 	@Override // Falta terminar
 	public LinkedList<NodeBT<K, T>> byLevel() throws EmptyTreeException {
 
-		if (root != null) {
-
-			LinkedList<NodeBT<K, T>> list = new LinkedList<>();
-			return list;
-
-		} else {
-
-			throw new EmptyTreeException();
-
-		}
+		if (root == null) throw new EmptyTreeException();
+		LinkedList<NodeBT<K, T>> list = new LinkedList<>();
+		return list;
 
 	}
 

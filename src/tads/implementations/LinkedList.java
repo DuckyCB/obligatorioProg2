@@ -12,31 +12,17 @@ public class LinkedList<T> implements MyList<T> {
 
 	public Node<T> goToPosition(int position) throws InvalidInformationException {
 
-		if (first != null) {
+		if (first == null) throw new InvalidInformationException();
+		Node<T> node = first;
 
-			Node<T> node = first;
+		for (int i = 0; i < position; i++) {
 
-			for (int i = 0; i < position; i++) {
-
-				if (node.getNext() != null) {
-
-					node = node.getNext();
-
-				} else {
-
-					throw new InvalidInformationException();
-
-				}
-
-			}
-
-			return node;
-
-		} else {
-
-			throw new InvalidInformationException();
+			if (node.getNext() == null) throw new InvalidInformationException();
+			node = node.getNext();
 
 		}
+
+		return node;
 
 	}
 
@@ -58,71 +44,39 @@ public class LinkedList<T> implements MyList<T> {
 
 			node.setNext(newNode);
 
-		} else {
+		} else first = newNode;
 
-			first = newNode;
-
-		}
-
-		size=size+1;
+		size++;
 
 	}
 
 	@Override
 	public void remove(int position) throws InvalidInformationException {
 
-		if (position == 0) {
+		if (first == null) throw new InvalidInformationException();
 
-			if (first != null) {
+		if (position == 0) first = null;
+		else if (position >= 1) {
 
-				first = null;
+			Node<T> node = first;
 
-			} else {
+			// Voy a la posicion(>=1) anterior para decidir que hacer a partir de ese nodo
+			node = goToPosition(position - 1);
 
-				throw new InvalidInformationException();
+			if (node.getNext() == null) {
 
-			}
-
-		} else if (position >= 1) {
-
-			if (first != null) {
-
-				Node<T> node = first;
-
-				// Voy a la posicion(>=1) anterior para decidir que hacer a partir de ese nodo
-				node = goToPosition(position - 1);
-
-				if (node.getNext() != null) {
-
-					if (node.getNext().getNext() != null) {
-
-						node.setNext(node.getNext().getNext());
-
-					} else {
-
-						node.setNext(null);
-
-					}
-
-				} else {
-
-					node.setNext(null);
-
-				}
+				if (node.getNext().getNext() != null) node.setNext(node.getNext().getNext());
+				else node.setNext(null);
 
 			} else {
 
-				throw new InvalidInformationException();
+				node.setNext(null);
 
 			}
 
-		} else {
+		} else throw new InvalidInformationException();
 
-			throw new InvalidInformationException();
-
-		}
-
-		size=size-1;
+		size--;
 
 	}
 
@@ -130,17 +84,8 @@ public class LinkedList<T> implements MyList<T> {
 	public T get(int position) throws InvalidInformationException {
 
 		Node<T> node = goToPosition(position);
-
-		if (node != null) {
-
-			return node.getValue();
-
-		} else {
-
-			throw new InvalidInformationException();
-
-		}
-
+		if (node == null) throw new InvalidInformationException();
+		return node.getValue();
 
 	}
 

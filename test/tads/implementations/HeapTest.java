@@ -10,7 +10,7 @@ public class HeapTest {
 	public void insert() {
 
 		Comparable<Integer>[] size= new Comparable[15];
-		Heap<Integer> heap= new Heap(size,true,false);
+		Heap<Integer> heap= new Heap(size,true);
 		heap.insert(10);
 		//heap.getLast() devuelve la cantidad de elementos
 		assertEquals((int) heap.getLast(), 1);
@@ -20,7 +20,7 @@ public class HeapTest {
 	public void deleteAndReturn_maxHeap() {
 
 		Comparable<Integer>[] size= new Comparable[15];
-		Heap<Integer> heap= new Heap(size,true,false);
+		Heap<Integer> heap= new Heap(size,true);
 		heap.insert(10);
 		heap.insert(5);
 		heap.insert(8);
@@ -31,7 +31,7 @@ public class HeapTest {
 	public void deleteAndReturn_minHeap() {
 
 		Comparable<Integer>[] size= new Comparable[15];
-		Heap<Integer> heap= new Heap(size,false,true);
+		Heap<Integer> heap= new Heap(size,false);
 		heap.insert(10);
 		heap.insert(5);
 		heap.insert(8);
@@ -43,7 +43,7 @@ public class HeapTest {
 	public void size() {
 
 		Comparable<Integer>[] size= new Comparable[4];
-		Heap<Integer> heap= new Heap(size,true,false);
+		Heap<Integer> heap= new Heap(size,true);
 		heap.insert(11);
 		heap.insert(2);
 

@@ -8,7 +8,7 @@ import tads.nodes.HashNode;
 
 public class ClosedHash<K, T> implements MyHash<K, T> {
 
-	private HashNode[] hash;
+	private HashNode<K, T>[] hash;
 	private int hashSize;
 	private int size;
 
@@ -17,6 +17,10 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 		this.hash = new HashNode[hashSize];
 		this.size = hashSize;
 
+	}
+
+	public HashNode<K, T>[] getHash() {
+		return hash;
 	}
 
 
@@ -28,24 +32,11 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 		while (hash[place] != null) {
 
 			place++;
-
-			if (place >= hashSize) {
-
-				place = 0;
-
-			} else if (place == ( (Integer) key ) % hashSize) {
+			if (place >= hashSize) place = 0;
+			if (place == ( (Integer) key ) % hashSize) throw new FullHashException();
 				// Solo llega a esto si recorre todos los espacios y no hay libre
-
-				throw new FullHashException();
 				// O bien se podria crear un nuevo hash de mayor size
-
-			}
-
-			if (hash[place].getKey().equals(key)) {
-
-				throw new InvalidInformationException();
-
-			}
+			if (hash[place].getKey().equals(key)) throw new InvalidInformationException();
 
 		}
 
@@ -58,35 +49,18 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 	public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
 		int place = ( (Integer) key ) % hashSize;
+		if (hash[place] == null) throw new InvalidInformationException();
 
-		if (hash[place] != null) {
+		while (!hash[place].getKey().equals(key)) {
 
-			while (!hash[place].getKey().equals(key)) {
-
-				place++;
-
-				if (place >= hashSize) {
-
-					place = 0;
-
-				} else if (place == ((Integer) key) % hashSize) {
-					// Solo llega a esto si recorre todos los espacios y no hay libre
-
-					throw new KeyNotFoundException();
-
-				}
-
-			}
-
-			return (T) hash[place].getValue();
-
-
-
-		} else {
-
-			throw new InvalidInformationException();
+			place++;
+			if (place >= hashSize) place = 0;
+			if (place == ((Integer) key) % hashSize) throw new KeyNotFoundException();
+				// Solo llega a esto si recorre todos los espacios y no hay libre
 
 		}
+
+		return (T) hash[place].getValue();
 
 	}
 

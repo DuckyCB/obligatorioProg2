@@ -5,15 +5,15 @@ import tads.interfaces.MyHeap;
 public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 
 	private T[] heap;
-	boolean maxHeap;
-	boolean minHeap;
-	int last;
+	private boolean maxHeap;
+	private boolean minHeap;
+	private int last;
 
-	public Heap(T[] heap, boolean maxHeap, boolean minHeap) {
+	public Heap(T[] heap, boolean maxHeap) {
 
 		this.heap = heap;
 		this.maxHeap = maxHeap;
-		this.minHeap = minHeap;
+		this.minHeap = !maxHeap;
 		this.last = 0;
 
 	}
@@ -29,25 +29,12 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 
 		if (last != heap.length) {
 
-			if (maxHeap) {
+			heap[last] = value;
+			last++;
+			if (maxHeap) compareMax(value, last);
+			else if (minHeap) compareMin(value, last);
 
-				heap[last] = value;
-				compareMax(value, last);
-				last = last + 1;
-
-			} else if (minHeap) {
-
-				heap[last] = value;
-				compareMin(value, last);
-				last = last + 1;
-
-			}
-
-		} else {
-
-			System.out.println("Heap completo");
-
-		}
+		} else System.out.println("Heap completo");
 
 	}
 
@@ -78,6 +65,7 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 			compareMin(value, fatherPos);
 
 		}
+
 	}
 
 	private int fatherPos(int posChild) {
@@ -90,24 +78,13 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 	public T deleteAndReturn() {
 
 		T toDelete = heap[0];
+		heap[0] = heap[last - 1];
+		T newFirst = heap[0];
+		heap[last - 1] = null;
+		last--;
 
-		if (maxHeap) {
-
-			heap[0] = heap[last - 1];
-			T newFirst = heap[0];
-			heap[last - 1] = null;
-			last = last - 1;
-			delCompareMax(0, newFirst);
-
-		} else if (minHeap) {
-
-			heap[0] = heap[last - 1];
-			T newFirst = heap[0];
-			heap[last - 1] = null;
-			last = last - 1;
-			delCompareMin(0, newFirst);
-
-		}
+		if (maxHeap) delCompareMax(0, newFirst);
+		else if (minHeap) delCompareMin(0, newFirst);
 
 		return toDelete;
 
@@ -254,7 +231,7 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 				if (heap[start] != null) {
 
 					System.out.print(heap[start] + " ");
-					start = start + 1;
+					start++;
 
 				} else {
 
@@ -265,7 +242,7 @@ public class Heap<T extends Comparable<T>> implements MyHeap<T> {
 			}
 
 			System.out.print("\n");
-			level = level + 1;
+			level++;
 
 		}
 

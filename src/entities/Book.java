@@ -1,10 +1,6 @@
 package entities;
 
-import tads.implementations.LinkedList;
-
-import java.lang.reflect.Array;
-
-public class Book {
+public class Book{
 
 	long book_id;
 	String isbn;

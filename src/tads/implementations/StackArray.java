@@ -27,31 +27,18 @@ public class StackArray<T> implements MyStack<T> {
 	@Override
 	public void pop() throws EmptyyStackException {
 
-		if (isEmpty()) {
-
-			throw new EmptyStackException();
-
-		} else {
-
-			array[size-1] = null;
-			size--;
-
-		}
+		if (isEmpty()) throw new EmptyStackException();
+		array[size-1] = null;
+		size--;
 
 	}
 
 	@Override
 	public T top() throws EmptyStackException {
 
-		if (isEmpty()) {
+		if (isEmpty()) throw new EmptyStackException();
+		return (T) array[size-1];
 
-			throw new EmptyStackException();
-
-		} else {
-
-			return (T) array[size-1];
-
-		}
 	}
 
 	@Override

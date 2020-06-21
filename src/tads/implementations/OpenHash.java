@@ -17,6 +17,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
         this.hash = new LinkedList[hashSize];
         this.size = 0;
         this.hashSize = hashSize;
+
     }
 
 
@@ -24,13 +25,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     public void put(K key, T value) throws InvalidInformationException {
 
         int place = ( ( (Integer) key ) % hashSize );
-
-        if (place >= hashSize){
-
-            throw new InvalidInformationException();
-
-        }
-
+        if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
 
         if (toEvaluate == null){
@@ -50,15 +45,9 @@ public class OpenHash<K, T> implements MyHash<K, T> {
 
                 HashNode<K, T> element = toEvaluate.get(i);
 
-                if (element.getKey().equals(key)) {
+                if (element.getKey().equals(key)) found = true;
+                else i++;
 
-                    found = true;
-
-                }else {
-
-                    i++;
-
-                }
             }
 
             if (!found) {
@@ -67,11 +56,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
                 toEvaluate.add(toAdd);
                 size++;
 
-            } else {
-
-                toEvaluate.get(i).setValue(value);
-
-            }
+            } else toEvaluate.get(i).setValue(value);
 
         }
 
@@ -81,51 +66,28 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
         int place = ( ( (Integer) key ) % hashSize );
-
-        if (place >= hashSize){
-
-            throw new InvalidInformationException();
-
-        }
-
+        if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
+        if (toEvaluate == null)  throw new KeyNotFoundException();
+        int i=0;
+        HashNode<K, T> toReturn = null;
+        boolean found=false;
 
-        if (toEvaluate == null){
+        while (i<toEvaluate.getSize() && !found) {
 
-            throw new KeyNotFoundException();
+            HashNode<K, T> element = toEvaluate.get(i);
 
-        }else{
+            if (element.getKey().equals(key)) {
 
-            int i=0;
-            HashNode<K, T> toReturn = null;
-            boolean found=false;
+                found = true;
+                toReturn= toEvaluate.goToPosition(i).getValue();
 
-            while (i<toEvaluate.getSize() && !found) {
-
-                HashNode<K, T> element = toEvaluate.get(i);
-
-                if (element.getKey().equals(key)) {
-
-                    found = true;
-                    toReturn= toEvaluate.goToPosition(i).getValue();
-
-                }else {
-
-                    i++;
-
-                }
-
-            }
-
-            if (!found){
-
-                throw new KeyNotFoundException();
-
-            }
-
-            return toReturn.getValue();
+            } else i++;
 
         }
+
+        if (!found) throw new KeyNotFoundException();
+        return toReturn.getValue();
 
     }
 
