@@ -57,10 +57,9 @@ public class UploadData {
 				String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
 				switch (entitie) {
+
 					case "book":
-
 							saveBook(attributes);
-
 						break;
 
 					case "rating":

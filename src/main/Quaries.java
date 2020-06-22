@@ -3,11 +3,9 @@ package main;
 import entities.Book;
 import entities.Tuple;
 import entities.User;
-import tads.implementations.ClosedHash;
-import tads.implementations.Heap;
-import tads.implementations.LinkedList;
-import tads.implementations.OpenHash;
+import tads.implementations.*;
 import tads.nodes.HashNode;
+import tads.nodes.NodeHeap;
 
 public class Quaries {
 
@@ -22,9 +20,11 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
-		LinkedList<Tuple<Book,Integer>> rankedBooks = new LinkedList<>();
+
+		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
 		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
-		HashNode<Long, Book>[] temp = UploadData.getBooks().getHash();
+		HashNode<Long, Book>[] temp = books.getHash();
+
 		Comparable<Integer>[] size = new Comparable[150000];
 		Heap<Integer> topBooks = new Heap(size, true);
 
@@ -67,6 +67,22 @@ public class Quaries {
 		- Cantidad
 		- Rating promedio */
 
+		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
+		// Recorrer usuarios
+		User user = new User(123); // esto es solo para tener un usuario y que no me tire errores
+	 	topTen.insert(user.getRatings().size(), user);
+
+
+		for (int i = 0; i < 10; i++) {
+
+			NodeHeap<Integer, User> node = topTen.deleteAndReturn();
+			User userTemp = node.getData();
+			System.out.println(userTemp.getUser_id());
+			System.out.println(userTemp.getRatings().size());
+			// Calcular promedio
+			System.out.println();
+
+		}
 
 	}
 

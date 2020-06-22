@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Menu {
 
+	private static boolean uploaded = false;
+
 	public static void mainMenu() {
 
 		System.out.println("----- Menu principal -----");
@@ -17,26 +19,30 @@ public class Menu {
 		String option = myObj.nextLine();
 
 		switch (option) {
+
 			case "1":
-
+				uploaded = true;
 				UploadData.timeDataLoad();
-
 				break;
+
 			case "2":
-
+				if (!uploaded) {
+					System.out.println("No se realizó carga de datos");
+					System.out.println("Se realizará carga de datos:");
+					UploadData.timeDataLoad();
+				}
 				runQueries();
-
 				break;
-			case "3":
 
+			case "3":
 				System.exit(0);
+				break;
 
 			default:
-
 				System.out.println(" *** Entrada invalida *** \n");
 				mainMenu();
-				
 				break;
+
 		}
 
 	}
@@ -61,40 +67,32 @@ public class Menu {
 		switch (option) {
 
 			case "1":
-
 				Quaries.top10Books();
-
 				break;
+
 			case "2":
-
 				Quaries.top20Books();
-
 				break;
+
 			case "3":
-
 				Quaries.top10Users();
-
 				break;
+
 			case "4":
-
 				Quaries.top5Language();
-
 				break;
+
 			case "5":
-
 				Quaries.top20Authors();
-
 				break;
+
 			case "6":
-
 				Menu.mainMenu();
-
 				break;
-			default:
 
+			default:
 				System.out.println("Entrada inválida");
 				runQueries();
-
 				break;
 
 		}

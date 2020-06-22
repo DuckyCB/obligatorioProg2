@@ -9,7 +9,7 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T> {
 	private int last;
 	private int heapType;
 
-	public void HeapImpl(int sizeHeap, int heapType) {
+	public HeapImp(int sizeHeap, int heapType) {
 
 		this.heap = new NodeHeap[sizeHeap];
 		this.heapType = heapType;
