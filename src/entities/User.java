@@ -15,4 +15,25 @@ public class User {
 		this.reservations = new LinkedList<>();
 
 	}
+
+	public long getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
+	}
+
+	public LinkedList<Rating> getRatings() {
+		return ratings;
+	}
+	public void setRatings(LinkedList<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public LinkedList<Book> getReservations() {
+		return reservations;
+	}
+	public void setReservations(LinkedList<Book> reservations) {
+		this.reservations = reservations;
+	}
 }

@@ -19,7 +19,7 @@ public class Menu {
 		switch (option) {
 			case "1":
 
-				Data.timeDataLoad();
+				UploadData.timeDataLoad();
 
 				break;
 			case "2":

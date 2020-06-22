@@ -88,7 +88,8 @@ public class LinkedList<T> implements MyList<T> {
 
 	}
 
-	public int getSize(){
+	@Override
+	public int size(){
 
 		return size;
 

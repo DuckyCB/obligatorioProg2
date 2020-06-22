@@ -24,7 +24,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     @Override
     public void put(K key, T value) throws InvalidInformationException {
 
-        int place = ( ( (Integer) key ) % hashSize );
+        int place = key.hashCode() % hashSize;
         if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
 
@@ -41,7 +41,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
             int i = 0;
             boolean found = false;
 
-            while (i < toEvaluate.getSize() && !found) {
+            while (i < toEvaluate.size() && !found) {
 
                 HashNode<K, T> element = toEvaluate.get(i);
 
@@ -65,7 +65,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     @Override
     public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
-        int place = ( ( (Integer) key ) % hashSize );
+        int place = key.hashCode() % hashSize ;
         if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
         if (toEvaluate == null)  throw new KeyNotFoundException();
@@ -73,7 +73,7 @@ public class OpenHash<K, T> implements MyHash<K, T> {
         HashNode<K, T> toReturn = null;
         boolean found=false;
 
-        while (i<toEvaluate.getSize() && !found) {
+        while (i<toEvaluate.size() && !found) {
 
             HashNode<K, T> element = toEvaluate.get(i);
 

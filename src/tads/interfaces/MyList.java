@@ -10,4 +10,6 @@ public interface MyList<T> {
 
 	T get(int position) throws InvalidInformationException;
 
+	int size();
+
 }

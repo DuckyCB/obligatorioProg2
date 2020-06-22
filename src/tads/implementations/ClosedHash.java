@@ -28,14 +28,14 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 	@Override
 	public void put(K key, T value) throws InvalidInformationException, FullHashException {
 
-		int place = ( (Integer) key ) % hashSize;
+		int place = key.hashCode() % hashSize;
 
 		while (hash[place] != null) {
 
 			if (hash[place]!= null) if (hash[place].getKey().equals(key)) throw new InvalidInformationException();
 			place++;
 			if (place >= hashSize) place = 0;
-			if (place == ( (Integer) key ) % hashSize) throw new FullHashException();
+			if (place == key.hashCode() % hashSize) throw new FullHashException();
 				// Solo llega a esto si recorre todos los espacios y no hay libre
 				// O bien se podria crear un nuevo hash de mayor size
 
@@ -50,14 +50,18 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 	@Override
 	public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
-		int place = ( (Integer) key ) % hashSize;
-		if (hash[place] == null) throw new InvalidInformationException();
-
+		int place = key.hashCode() % hashSize;
+		if (hash[place] == null) {
+			System.out.println(place);
+			throw new InvalidInformationException();
+		}
+		// System.out.println(hash[place].getKey());
+		// System.out.println(key);
 		while (!hash[place].getKey().equals(key)) {
 
 			place++;
 			if (place >= hashSize) place = 0;
-			if (place == ((Integer) key) % hashSize) throw new KeyNotFoundException();
+			if (place == key.hashCode() % hashSize) throw new KeyNotFoundException();
 				// Solo llega a esto si recorre todos los espacios y no hay libre
 
 		}

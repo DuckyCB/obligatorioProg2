@@ -1,10 +1,18 @@
 package main;
 
 import entities.Book;
+import entities.Tuple;
+import entities.User;
+import tads.implementations.ClosedHash;
 import tads.implementations.Heap;
+import tads.implementations.LinkedList;
+import tads.implementations.OpenHash;
 import tads.nodes.HashNode;
 
 public class Quaries {
+
+	private static ClosedHash<Long, Book> books = UploadData.getBooks();
+	private static OpenHash<Long, User> users = UploadData.getUsers();
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden
@@ -14,12 +22,13 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
-
-		HashNode<Integer, Book>[] temp = Data.getBooks().getHash();
+		LinkedList<Tuple<Book,Integer>> rankedBooks = new LinkedList<>();
+		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
+		HashNode<Long, Book>[] temp = UploadData.getBooks().getHash();
 		Comparable<Integer>[] size = new Comparable[150000];
 		Heap<Integer> topBooks = new Heap(size, true);
 
-		for (HashNode<Integer, Book> bookNode : temp) {
+		for (HashNode<Long, Book> bookNode : temp) {
 
 			if (bookNode != null) {
 
@@ -41,7 +50,7 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
-		HashNode<Integer, Book>[] temp = Data.getBooks().getHash();
+		HashNode<Long, Book>[] temp = UploadData.getBooks().getHash();
 
 
 
