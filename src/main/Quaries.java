@@ -62,31 +62,23 @@ public class Quaries {
 
 		NodeBT<Integer, Book>[] booksWRating= new NodeBT[ books.getSize()]; // donde se guardaran los libros
 
-		Iterator<Book> itBook= books.iterator();
+		int pos=0; // posicion a guardar en el vector!
 
-		Book toCompare= itBook.next(); // me da que no tiene nada??? SOS
-
-		while(itBook.hasNext()){
+		for(Book book:books){
 
 			boolean found=false;
 
 			int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
 
-			int pos=-1; // posicion a guardar en el vector!
+			for (User user: users){
 
-			Iterator<User> itUsers= users.iterator();
-
-			User user=itUsers.next();
-
-			while (itUsers.hasNext()){
-
-				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings
+				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings del user
 
 				for(int i=0; i< ratings.size(); i++){
 
-					Book ratingBook = ratings.dequeue().getBook(); // con queue linked list no se me rompe?
+					Book ratingBook = ratings.dequeue().getBook();
 
-					if(ratingBook.getBook_id()== toCompare.getBook_id()){
+					if(ratingBook.getBook_id()== book.getBook_id()){
 
 						times=times+1;
 
@@ -96,39 +88,39 @@ public class Quaries {
 
 				}
 
-				user=itUsers.next();
-
 				if(found==true && times!=0){
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, book);
 
-					booksWRating[pos+1]= toAdd;
+					booksWRating[pos]= toAdd;
+
 				}else{
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, toCompare);
 
-					booksWRating[pos+1]= toAdd;
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, book);
+
+					booksWRating[pos]= toAdd;
 				}
 
-				toCompare= itBook.next();
-
 			}
 
-			Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+			pos=pos+1;
 
-			toSort.quicksort(booksWRating);
+		}
 
-			int posToPrint= booksWRating.length;
+		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
 
-			for(int i= 0; i<10; i++){
+		toSort.quicksort(booksWRating);
 
-				System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
+		int posToPrint= booksWRating.length;
 
-				System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
+		for(int i= 0; i<10; i++){
 
-				System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
+			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
 
-				posToPrint=posToPrint-1;
-			}
+			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
 
+			System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
+
+			posToPrint=posToPrint-1;
 		}
 
 	}
