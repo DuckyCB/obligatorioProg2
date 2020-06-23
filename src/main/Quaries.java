@@ -72,7 +72,7 @@ public class Quaries {
 
 		Iterator<Book> itBook = books.iterator();
 
-		Book toCompare = itBook.next();
+		Book toCompare= itBook.next(); // me da que no tiene nada??? SOS
 
 		while (itBook.hasNext()) {
 

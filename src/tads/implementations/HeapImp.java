@@ -17,7 +17,6 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Ite
 		this.heap = new NodeHeap[sizeHeap];
 		this.heapType = heapType;
 		this.last = 0;
-		this.it = -1;
 	}
 
 	@Override
