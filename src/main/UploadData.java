@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 public class UploadData {
 
 	private static ClosedHash<Long, Book> books = new ClosedHash<>(10001);
-	private static OpenHash<Long, User> users = new OpenHash<>(50000);
+	private static ClosedHash<Long, User> users = new ClosedHash<>(50000);
 
 	public static void timeDataLoad() {
 
@@ -34,13 +34,16 @@ public class UploadData {
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.print("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
 
+		// ESTO PUEDE HACER EXPLOTAR TOD0
+		System.gc();
+
 	}
 
 	public static ClosedHash<Long, Book> getBooks() {
 		return books;
 	}
 
-	public static OpenHash<Long, User> getUsers() {
+	public static ClosedHash<Long, User> getUsers() {
 		return users;
 	}
 
@@ -144,6 +147,8 @@ public class UploadData {
 
 			System.out.println("Error");
 
+		} catch (FullHashException e) {
+			e.printStackTrace();
 		}
 
 	}
