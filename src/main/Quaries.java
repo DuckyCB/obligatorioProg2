@@ -77,10 +77,10 @@ public class Quaries {
 
 			NodeHeap<Integer, User> node = topTen.deleteAndReturn();
 			User userTemp = node.getData();
-			System.out.println(userTemp.getUser_id());
-			System.out.println(userTemp.getRatings().size());
+			System.out.println("ID del usuario: " + userTemp.getUser_id());
+			System.out.println("Cantidad: " + userTemp.getRatings().size());
 			// Calcular promedio
-			System.out.println();
+			//System.out.println(promedio);
 
 		}
 

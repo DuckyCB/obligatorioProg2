@@ -25,11 +25,11 @@ public class UploadData {
 		long startTime = System.currentTimeMillis();
 
 		System.out.println("Read books");
-		readFromCSV("books.csv", "book");
+		readFromCSV("books.csv");
 		System.out.println("Read ratings");
-		readFromCSV("ratings.csv", "rating");
+		readFromCSV("ratings.csv");
 		System.out.println("Read to read");
-		readFromCSV("to_read.csv", "toread");
+		readFromCSV("to_read.csv");
 
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.print("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
@@ -45,7 +45,7 @@ public class UploadData {
 	}
 
 
-	private static void readFromCSV(String fileName, String entitie) {
+	private static void readFromCSV(String fileName) {
 
 		try ( BufferedReader br = Files.newBufferedReader(Paths.get(fileName)) ) {
 
@@ -56,17 +56,17 @@ public class UploadData {
 
 				String[] attributes = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-				switch (entitie) {
+				switch (fileName) {
 
-					case "book":
+					case "books.csv":
 							saveBook(attributes);
 						break;
 
-					case "rating":
+					case "ratings.csv":
 						saveRating(attributes);
 						break;
 
-					case "toread":
+					case "to_read.csv":
 						saveToRead(attributes);
 						break;
 
