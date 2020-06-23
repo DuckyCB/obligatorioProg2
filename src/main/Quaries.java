@@ -35,7 +35,7 @@ public class Quaries {
 
 		for (User user: users) {
 
-			// topTen.insert(user.);
+			//topTen.insert(user.);
 
 		}
 
@@ -48,7 +48,7 @@ public class Quaries {
 
 	}
 
-	public static void top20Books() throws InvalidInformationException, EmptyQueueException {
+	public static void top20Books() {
 		/* Nuevamente considerando los libros pero ahora considerando las
 		evaluaciones recibidas por sus usuario, se deberá hacer un listado de los
 		Top 20 de libros que más cantidad de evaluaciones recibieron (independiente
@@ -64,9 +64,9 @@ public class Quaries {
 
 		Iterator<Book> itBook= books.iterator();
 
-		while(itBook.hasNext()){
+		Book toCompare= itBook.next();
 
-			Book toCompare= itBook.next();
+		while(itBook.hasNext()){
 
 			boolean found=false;
 
@@ -76,9 +76,9 @@ public class Quaries {
 
 			Iterator<User> itUsers= users.iterator();
 
-			while (itUsers.hasNext()){
+			User user=itUsers.next();
 
-				User user=itUsers.next();
+			while (itUsers.hasNext()){
 
 				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings
 
@@ -96,6 +96,8 @@ public class Quaries {
 
 				}
 
+				user=itUsers.next();
+
 				if(found==true && times!=0){
 					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
 
@@ -105,6 +107,8 @@ public class Quaries {
 
 					booksWRating[pos+1]= toAdd;
 				}
+
+				toCompare= itBook.next();
 
 			}
 

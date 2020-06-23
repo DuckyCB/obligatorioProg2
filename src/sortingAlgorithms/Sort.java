@@ -30,7 +30,7 @@ public class Sort<T extends Comparable<T>>{
 
         for( int j= low; j<= high-1; j++){
 
-            if (pivot.compareTo(toOrder[j])>0){
+            if (pivot.compareTo(toOrder[j])>0 ){
 
                 i++;
 
