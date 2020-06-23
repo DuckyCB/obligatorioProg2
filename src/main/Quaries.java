@@ -48,7 +48,7 @@ public class Quaries {
 
 	}
 
-	public static void top20Books() throws InvalidInformationException {
+	public static void top20Books() throws InvalidInformationException, EmptyQueueException {
 		/* Nuevamente considerando los libros pero ahora considerando las
 		evaluaciones recibidas por sus usuario, se deberá hacer un listado de los
 		Top 20 de libros que más cantidad de evaluaciones recibieron (independiente
@@ -80,11 +80,11 @@ public class Quaries {
 
 				User user=itUsers.next();
 
-				LinkedList<Rating> ratings= user.getRatings(); // todos los ratings
+				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings
 
 				for(int i=0; i< ratings.size(); i++){
 
-					Book ratingBook = ratings.get(i).getBook(); // con queue linked list no se me rompe?
+					Book ratingBook = ratings.dequeue().getBook(); // con queue linked list no se me rompe?
 
 					if(ratingBook.getBook_id()== toCompare.getBook_id()){
 
