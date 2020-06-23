@@ -208,6 +208,7 @@ public class Quaries {
 		- Año de publicacion
 		- Cantidad */
 
+		System.out.println("Esta es una pregunta filosofica, puede tener muchas respuestas");
 
 	}
 
