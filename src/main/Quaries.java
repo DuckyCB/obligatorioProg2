@@ -5,6 +5,7 @@ import entities.Tuple;
 import entities.User;
 import tads.implementations.*;
 import tads.nodes.HashNode;
+import tads.nodes.Node;
 import tads.nodes.NodeHeap;
 
 public class Quaries {
@@ -50,7 +51,29 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
-		HashNode<Long, Book>[] temp = UploadData.getBooks().getHash();
+		OpenHash<Long, User> allUsers = UploadData.getUsers(); //all users
+		HeapImp<Integer, Book> booksByRating= new HeapImp<>(UploadData.getBooks().getSize(),1);
+		for (int i=0; i<allUsers.getSize(); i++){
+			int pos=0;
+			//uso iterador de OpenHash para obtener el book a comparar
+			// ej, le pongo toCompare al libro en pos i
+			boolean found=false;
+			for(int j=0;j< booksByRating.size();j++){
+				// MAL PLANTEADA, BUEN CONCEPTO(?)
+				// if(toCompare.getBook_id.compareTo(booksByRating(pos j)) == 0)){
+				// 		Le sumo uno a la key!! (solo dios sabe como)
+				// 		found=true;
+				// }
+			}
+			if (found==false){
+				//NodeHeap<Integer,Book>= new NodeHeap<0, toCompare>()
+			}
+			// se ordena el heap y queda!
+
+
+		}
+
+
 
 
 
