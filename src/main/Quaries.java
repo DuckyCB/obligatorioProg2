@@ -35,7 +35,7 @@ public class Quaries {
 
 		for (User user: users) {
 
-			topTen.insert(user.);
+			// topTen.insert(user.);
 
 		}
 
@@ -232,9 +232,17 @@ public class Quaries {
 		- Año de publicacion
 		- Cantidad */
 
-		System.out.println("Esta es una pregunta filosofica, puede tener muchas respuestas");
+		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
+
+		for (User user: users) {
+
+
+
+		}
 
 		Tuple<Integer, Tuple<String, Integer>>[] topRatings = new Tuple[20];
+
+		//Sort.quicksort(topRatings);
 
 		for (int i = 0; i < 20; i++) {
 
