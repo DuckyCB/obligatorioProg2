@@ -7,8 +7,7 @@ import entities.User;
 import exceptions.FullHashException;
 import exceptions.InvalidInformationException;
 import exceptions.KeyNotFoundException;
-import tads.implementations.ClosedHash;
-import tads.implementations.OpenHash;
+import tads.implementations.ClosedHashOld;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +16,8 @@ import java.nio.file.Paths;
 
 public class UploadData {
 
-	private static ClosedHash<Long, Book> books = new ClosedHash<>(10001);
-	private static ClosedHash<Long, User> users = new ClosedHash<>(60000);
+	private static ClosedHashOld<Long, Book> books = new ClosedHashOld<>(10001);
+	private static ClosedHashOld<Long, User> users = new ClosedHashOld<>(60000);
 
 	public static void timeDataLoad() {
 
@@ -39,11 +38,11 @@ public class UploadData {
 
 	}
 
-	public static ClosedHash<Long, Book> getBooks() {
+	public static ClosedHashOld<Long, Book> getBooks() {
 		return books;
 	}
 
-	public static ClosedHash<Long, User> getUsers() {
+	public static ClosedHashOld<Long, User> getUsers() {
 		return users;
 	}
 

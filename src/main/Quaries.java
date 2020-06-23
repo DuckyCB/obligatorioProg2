@@ -4,18 +4,16 @@ import entities.Book;
 import entities.Tuple;
 import entities.User;
 import exceptions.InvalidInformationException;
-import sortingAlgorithms.Sort;
 import tads.implementations.*;
 import tads.nodes.HashNode;
-import tads.nodes.NodeHeap;
 import utils.Functions;
 
 import java.text.DecimalFormat;
 
 public class Quaries {
 
-	private static ClosedHash<Long, Book> books = UploadData.getBooks();
-	private static ClosedHash<Long, User> users = UploadData.getUsers();
+	private static ClosedHashOld<Long, Book> books = UploadData.getBooks();
+	private static ClosedHashOld<Long, User> users = UploadData.getUsers();
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden
@@ -60,9 +58,9 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		ClosedHash<Long, User> allUsers = UploadData.getUsers(); //all users
+		ClosedHashOld<Long, User> allUsers = UploadData.getUsers(); //all users
 
-		ClosedHash<Long, Book> booksByRating= UploadData.getBooks(); //all books
+		ClosedHashOld<Long, Book> booksByRating= UploadData.getBooks(); //all books
 
 		HashNode<Integer, Book>[] booksWRating= new HashNode[ booksByRating.getSize()]; // donde se guardaran los libros
 

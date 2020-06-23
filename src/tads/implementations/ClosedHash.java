@@ -1,114 +1,178 @@
 package tads.implementations;
 
-import exceptions.FullHashException;
-import exceptions.InvalidInformationException;
-import exceptions.KeyNotFoundException;
-import tads.interfaces.MyHash;
-import tads.nodes.HashNode;
-import tads.nodes.NodeHeap;
+import tads.interfaces.MyHashIterable;
+import tads.nodes.HashEntry;
 
 import java.util.Iterator;
 
-public class ClosedHash<K, T> implements MyHash<K, T>, Iterator<HashNode<K,T>> {
+public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
-	private HashNode<K, T>[] hash;
-	private int hashSize;
+	private static int LINEAL_COLLISION_FUNCTION = 1;
+	private HashEntry<K, T>[] hashTable;
 	private int size;
-	private int it;
+	private int defaultCollisionFunction = ClosedHash.LINEAL_COLLISION_FUNCTION;
 
-	public ClosedHash(int hashSize) {
+	public ClosedHash(int size) {
 
-		this.hash = new HashNode[hashSize];
-		this.hashSize = hashSize;
-		this.size=0;
-		this.it=-1;
+		this.hashTable = new HashEntry[size];
 
 	}
-
-	public HashNode<K, T>[] getHash() {
-		return hash;
-	}
-
 
 	@Override
-	public void put(K key, T value) throws InvalidInformationException, FullHashException {
+	public void put(K key, T value) {
+		int attempt = 0;
+		int position = internalHashcodeWithCollision(key, attempt);
 
-		int place = key.hashCode() % hashSize;
+		HashEntry<K, T> valueToInsert = new HashEntry<>(key, value);
 
-		while (hash[place] != null) {
+		while (hashTable[position] != null &&
+				!hashTable[position].isRemoved() &&
+				!hashTable[position].getKey().equals(key) &&
+				!(attempt > hashTable.length)) {
 
-			if (hash[place]!= null) if (hash[place].getKey().equals(key)) throw new InvalidInformationException();
-			place++;
-			if (place >= hashSize) place = 0;
-			if (place == key.hashCode() % hashSize) throw new FullHashException();
-				// Solo llega a esto si recorre todos los espacios y no hay libre
-				// O bien se podria crear un nuevo hash de mayor size
+			attempt++;
+			position = internalHashcodeWithCollision(key, attempt);
 
 		}
 
-		hash[place] = new HashNode<>(key, value);
+		if (attempt > hashTable.length) {
+
+			throw new RuntimeException("No se encontro lugar disponible");
+		}
+
+		if (hashTable[position] == null || hashTable[position].isRemoved()) {
+
+			hashTable[position] = valueToInsert;
+
+		} else { // Si sale por aca es porque ya existe un elemento en la clave con lo que hay que sustituir el valor
+
+			hashTable[position].setValue(value);
+		}
+
 		size++;
-
 	}
+	public int filledBuckets (){
 
+		int res = 0;
 
-	@Override
-	public T get(K key) throws KeyNotFoundException, InvalidInformationException {
+		for (HashEntry<K, T> elements: hashTable) {
 
-		int place = key.hashCode() % hashSize;
-
-		if (hash[place] == null) {
-			System.out.println(place);
-			throw new InvalidInformationException();
-		}
-		// System.out.println(hash[place].getKey());
-		// System.out.println(key);
-		while (!hash[place].getKey().equals(key)) {
-
-			place++;
-			if (place >= hashSize) place = 0;
-			if (place == key.hashCode() % hashSize) throw new KeyNotFoundException();
-				// Solo llega a esto si recorre todos los espacios y no hay libre
+			if (elements != null) res++;
 
 		}
 
-		return (T) hash[place].getValue();
+		return res;
 
 	}
 
 	@Override
+	public T get(K key) {
+		int attempt = 0;
+		int position = internalHashcodeWithCollision(key, attempt);
+		T valueToReturn = null;
+
+		while (hashTable[position] != null &&
+				!hashTable[position].getKey().equals(key) &&
+				!(attempt > hashTable.length)) {
+
+			attempt++;
+			position = internalHashcodeWithCollision(key, attempt);
+
+		}
+
+		if (hashTable[position] != null &&
+				!(attempt > hashTable.length) &&
+				hashTable[position].getKey().equals(key) &&
+				!hashTable[position].isRemoved()) {
+
+			valueToReturn = hashTable[position].getValue();
+
+		}
+
+		return valueToReturn;
+	}
+
+
 	public int getSize() {
+		return this.size;
+	}
 
-		return size;
+	@Override
+	public void remove(K key) {
 
 	}
 
 	@Override
-	public boolean hasNext() {
+	public boolean contains(K key) {
+		return this.get(key) != null;
+	}
 
-		if (hash[it+1]!=null){
+	private int internalHashcodeWithCollision(K key, int attempt) {
+		return (key.hashCode() + collisionFunction(attempt)) % hashTable.length;
+	}
 
-			it=it+1;
+	private int collisionFunction(int i) {
+		int value = 0;
 
-			return true;
+		if (defaultCollisionFunction == LINEAL_COLLISION_FUNCTION) {
 
-		}else{
+			value = i;
 
-			it=-1;
+		}
 
-			return false;
+		return value;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+
+		return new HashIterator(hashTable);
+
+	}
+
+	private class HashIterator implements Iterator<T> {
+
+		private HashEntry<K, T>[] hashTable;
+		private int count;
+		private int maxIndex;
+		private HashEntry<K, T> current;
+
+		public HashIterator(HashEntry<K, T>[] hashTable) {
+
+			this.hashTable = hashTable;
+			this.count = 0;
+			this.maxIndex = hashTable.length;
+			moveToNext();
+
+		}
+
+		@Override
+		public boolean hasNext() {
+
+			return count<maxIndex;
+
+		}
+
+		@Override
+		public T next() {
+
+			T data = hashTable[count].getValue();
+			count++;
+			moveToNext();
+			return data;
+
+		}
+
+		public void moveToNext(){
+
+			while(count<maxIndex && (hashTable[count] == null || hashTable[count].isRemoved())){
+
+				count++;
+
+			}
 
 		}
 
 	}
 
-	@Override
-	public HashNode<K, T> next() {
-
-		HashNode<K,T> next= hash[it+1];
-
-		it=it+1;
-
-		return next;
-	}
 }

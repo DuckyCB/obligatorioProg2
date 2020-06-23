@@ -7,11 +7,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ClosedHashTest {
+public class ClosedHashOldTest {
     @Test
     public void put(){
 
-        ClosedHash prueba= new ClosedHash(5);
+        ClosedHashOld prueba= new ClosedHashOld(5);
 
         try {
 
@@ -44,7 +44,7 @@ public class ClosedHashTest {
     @Test
     public void get(){
 
-        ClosedHash prueba = new ClosedHash(5);
+        ClosedHashOld prueba = new ClosedHashOld(5);
         try {
 
             prueba.put(1, "a"); // pos 1
@@ -71,7 +71,7 @@ public class ClosedHashTest {
         @Test
     public void getSize(){
 
-            ClosedHash prueba= new ClosedHash(5);
+            ClosedHashOld prueba= new ClosedHashOld(5);
 
             try {
 
