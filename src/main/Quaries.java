@@ -84,7 +84,7 @@ public class Quaries {
 
 				for(int i=0; i< ratings.size(); i++){
 
-					Book ratingBook = ratings.get(i).getBook();
+					Book ratingBook = ratings.get(i).getBook(); // con queue linked list no se me rompe?
 
 					if(ratingBook.getBook_id()== toCompare.getBook_id()){
 
@@ -128,7 +128,6 @@ public class Quaries {
 		}
 
 	}
-
 
 	public static void top10Users() {
 		/* Obtener el Top 10 de usuarios que realizaron mayor cantidad de
