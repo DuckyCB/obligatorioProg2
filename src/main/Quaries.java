@@ -11,6 +11,7 @@ import tads.nodes.Node;
 import tads.nodes.NodeBT;
 import tads.implementations.*;
 import tads.nodes.HashNode;
+import tads.nodes.NodeHeap;
 import utils.Functions;
 
 import java.text.DecimalFormat;
@@ -32,18 +33,54 @@ public class Quaries {
 
 		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
 		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
+		NodeBT<Integer,  Book>[] allBooks= new NodeBT[books.getSize()];
 
-		for (User user: users) {
+		int pos=0;
+		for (Book book: books) {
 
-			//topTen.insert(user.);
+			int reservations=0;
+
+			for(User user: users){
+
+				QueueLinkedList<Book> bookReserved= user.getReservations();
+
+				if(bookReserved.dequeue().getBook_id()== book.getBook_id()){
+
+					reservations= reservations+1;
+
+				}
+
+			}
+
+			NodeBT<Integer,  Book> toAdd= new NodeBT(reservations,book);
+
+			allBooks[pos]= toAdd;
+
+			pos= pos+1;
 
 		}
+		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
 
-		for (int i = 0; i < 10; i++) {
+		toSort.quicksort(allBooks);
 
+		int posToPrint= allBooks.length;
 
+		for(int i= 0; i<10; i++){
 
+			System.out.println("Id del libro: "+ allBooks[posToPrint-1].getData().getBook_id());
+
+			System.out.println("Titulo: "+ allBooks[posToPrint-1].getData().getOriginal_title());
+
+			System.out.println("Cantidad: " + allBooks[posToPrint-1].getKey());
+
+			posToPrint=posToPrint-1;
 		}
+
+
+
+
+
+
 
 
 	}
@@ -71,6 +108,8 @@ public class Quaries {
 			int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
 
 			for (User user: users){
+
+				//hasta aca llega
 
 				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings del user
 
