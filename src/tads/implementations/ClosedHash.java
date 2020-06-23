@@ -165,45 +165,27 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 	private class HashIterator implements Iterator<T> {
 
 		private HashEntry<K, T>[] hashTable;
-		private int count;
-		private int maxIndex;
-		private HashEntry<K, T> current;
+		private int index;
 
 		public HashIterator(HashEntry<K, T>[] hashTable) {
 
 			this.hashTable = hashTable;
-			this.count = -1;
-			this.maxIndex = hashTable.length;
-			moveToNext();
+			this.index = 0;
 
 		}
 
 		@Override
 		public boolean hasNext() {
 
-			boolean toReturn=false;
-			if(hashTable[count+1]!= null && count<maxIndex){
-				toReturn=true;
-			}
-			return toReturn;
+			while (index != hashTable.length && hashTable[index] == null) index++;
+			return index != hashTable.length;
 
 		}
 
 		@Override
 		public T next() {
-			T data = hashTable[count+1].getValue();
-			moveToNext();
-			return data;
 
-		}
-
-		public void moveToNext(){
-
-			while(count<maxIndex && (hashTable[count+1] == null || hashTable[count+1].isRemoved())){
-
-				count++;
-
-			}
+			return hashTable[index++].getValue();
 
 		}
 

@@ -1,6 +1,5 @@
 package entities;
 
-import tads.implementations.LinkedList;
 import tads.implementations.QueueLinkedList;
 
 public class User {

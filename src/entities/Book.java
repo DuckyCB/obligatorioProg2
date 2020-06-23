@@ -1,5 +1,7 @@
 package entities;
 
+import tads.implementations.QueueLinkedList;
+
 public class Book{
 
 	private long book_id;

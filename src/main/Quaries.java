@@ -31,16 +31,29 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		HeapImp<Long, Integer> topTen = new HeapImp<>(100000, 1);
-		ClosedHash<Integer, Book> hash = new ClosedHash<>(10001);
+		HeapImp<Long, Integer> topTen = new HeapImp<>(10001, 1);
+		ClosedHash<Long, Book> hash = new ClosedHash<>(10001);
 		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
+
+		for (User user: users) {
+
+
+
+		}
 
 		for (HashEntry<Long, User> node : users.getHashTable()) { // Dani, no me servia usar el iteretor porque me devolvia el valor no la kye, y yo preciso la key
 
 			for (int i = 0; i < node.getValue().getReservations().size(); i++) {
 
 				Book book = node.getValue().getReservations().dequeue();
-				topTen.insert(book.getBook_id(), book);
+				try {
+
+					hash.get(book.getBook_id());
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// topTen.insert(book.getBook_id(), book);
 				node.getValue().getReservations().enqueue(book);
 
 			}
