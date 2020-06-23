@@ -3,10 +3,12 @@ package main;
 import entities.Book;
 import entities.Tuple;
 import entities.User;
+import sortingAlgorithms.Sort;
 import tads.implementations.*;
 import tads.nodes.HashNode;
-import tads.nodes.Node;
-import tads.nodes.NodeHeap;
+import utils.Functions;
+
+import java.text.DecimalFormat;
 
 public class Quaries {
 
@@ -95,15 +97,27 @@ public class Quaries {
 		User user = new User(123); // esto es solo para tener un usuario y que no me tire errores
 	 	topTen.insert(user.getRatings().size(), user);
 
+		Tuple<Float, User>[] topRatings = new Tuple[10];
 
 		for (int i = 0; i < 10; i++) {
 
-			NodeHeap<Integer, User> node = topTen.deleteAndReturn();
-			User userTemp = node.getData();
+			User userTemp = topTen.deleteAndReturn().getData();
+			float average = Functions.linkedListAverage(userTemp.getRatings());
+			topRatings[0] = new Tuple(average, topTen.deleteAndReturn());
+
+		}
+
+		// Tiene que ordenar el topRating usando topRating[i].getKey() como valor
+		Sort.quicksort(topRatings);
+		// No anda el quicksort
+
+		for (int i = 0; i < 10; i++) {
+
+			User userTemp = topRatings[i].getValue();
 			System.out.println("ID del usuario: " + userTemp.getUser_id());
 			System.out.println("Cantidad: " + userTemp.getRatings().size());
-			// Calcular promedio
-			//System.out.println(promedio);
+			DecimalFormat decimalFormat = new DecimalFormat("#.##");
+			System.out.println("Rating promedio" + decimalFormat.format(topRatings[i].getKey()));
 
 		}
 

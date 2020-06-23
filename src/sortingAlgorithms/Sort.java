@@ -1,6 +1,6 @@
 package sortingAlgorithms;
 
-public class Quicksort <T extends Comparable <T>>{
+public class Sort<T extends Comparable<T>>{
 
     public void quicksort(T[] toOrder){
 
@@ -22,7 +22,7 @@ public class Quicksort <T extends Comparable <T>>{
 
     }
 
-    private int posPiv(T[]toOrder, int low, int high){
+    private int posPiv(T[] toOrder, int low, int high){
 
         T pivot= toOrder[high];
 
@@ -46,7 +46,7 @@ public class Quicksort <T extends Comparable <T>>{
 
     }
 
-    private void swap(T[]toOrder, int toChange1, int toChange2){
+    private void swap(T[] toOrder, int toChange1, int toChange2){
 
         T oldMin= toOrder[toChange1];
 

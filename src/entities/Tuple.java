@@ -1,6 +1,6 @@
 package entities;
 
-public class Tuple<T,K extends Comparable> {
+public class Tuple<K extends Comparable, T> {
 
 	private K key;
 	private T value;
@@ -8,8 +8,15 @@ public class Tuple<T,K extends Comparable> {
 	public Tuple() {
 	}
 
-	public Tuple(T value, K key) {
+	public Tuple(K key, T value) {
 		this.value = value;
+		this.key = key;
+	}
+
+	public K getKey() {
+		return key;
+	}
+	public void setKey(K key) {
 		this.key = key;
 	}
 
@@ -18,13 +25,6 @@ public class Tuple<T,K extends Comparable> {
 	}
 	public void setValue(T value) {
 		this.value = value;
-	}
-
-	public K getKey() {
-		return key;
-	}
-	public void setKey(K key) {
-		this.key = key;
 	}
 
 }
