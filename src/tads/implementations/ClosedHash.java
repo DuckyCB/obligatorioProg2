@@ -52,6 +52,35 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 		size++;
 	}
+
+	public static int getLinealCollisionFunction() {
+		return LINEAL_COLLISION_FUNCTION;
+	}
+
+	public static void setLinealCollisionFunction(int linealCollisionFunction) {
+		LINEAL_COLLISION_FUNCTION = linealCollisionFunction;
+	}
+
+	public HashEntry<K, T>[] getHashTable() {
+		return hashTable;
+	}
+
+	public void setHashTable(HashEntry<K, T>[] hashTable) {
+		this.hashTable = hashTable;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getDefaultCollisionFunction() {
+		return defaultCollisionFunction;
+	}
+
+	public void setDefaultCollisionFunction(int defaultCollisionFunction) {
+		this.defaultCollisionFunction = defaultCollisionFunction;
+	}
+
 	public int filledBuckets (){
 
 		int res = 0;

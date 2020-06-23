@@ -7,6 +7,7 @@ import entities.User;
 import exceptions.EmptyQueueException;
 import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
+import tads.nodes.HashEntry;
 import tads.nodes.Node;
 import tads.nodes.NodeBT;
 import tads.implementations.*;
@@ -30,12 +31,19 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
+		HeapImp<Long, Integer> topTen = new HeapImp<>(100000, 1);
+		ClosedHash<Integer, Book> hash = new ClosedHash<>(10001);
 		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
 
-		for (User user: users) {
+		for (HashEntry<Long, User> node : users.getHashTable()) { // Dani, no me servia usar el iteretor porque me devolvia el valor no la kye, y yo preciso la key
 
-			//topTen.insert(user.);
+			for (int i = 0; i < node.getValue().getReservations().size(); i++) {
+
+				Book book = node.getValue().getReservations().dequeue();
+				topTen.insert(book.getBook_id(), book);
+				node.getValue().getReservations().enqueue(book);
+
+			}
 
 		}
 
@@ -60,73 +68,73 @@ public class Quaries {
 
 		// tengo en books y users todos los books y users
 
-		NodeBT<Integer, Book>[] booksWRating= new NodeBT[ books.getSize()]; // donde se guardaran los libros
+		NodeBT<Integer, Book>[] booksWRating = new NodeBT[books.getSize()]; // donde se guardaran los libros
 
-		Iterator<Book> itBook= books.iterator();
+		Iterator<Book> itBook = books.iterator();
 
-		Book toCompare= itBook.next();
+		Book toCompare = itBook.next();
 
-		while(itBook.hasNext()){
+		while (itBook.hasNext()) {
 
-			boolean found=false;
+			boolean found = false;
 
 			int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
 
-			int pos=-1; // posicion a guardar en el vector!
+			int pos = -1; // posicion a guardar en el vector!
 
-			Iterator<User> itUsers= users.iterator();
+			Iterator<User> itUsers = users.iterator();
 
-			User user=itUsers.next();
+			User user = itUsers.next();
 
-			while (itUsers.hasNext()){
+			while (itUsers.hasNext()) {
 
-				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings
+				QueueLinkedList<Rating> ratings = user.getRatings(); // todos los ratings
 
-				for(int i=0; i< ratings.size(); i++){
+				for (int i = 0; i < ratings.size(); i++) {
 
 					Book ratingBook = ratings.dequeue().getBook(); // con queue linked list no se me rompe?
 
-					if(ratingBook.getBook_id()== toCompare.getBook_id()){
+					if (ratingBook.getBook_id() == toCompare.getBook_id()) {
 
-						times=times+1;
+						times = times + 1;
 
-						found=true;
+						found = true;
 
 					}
 
 				}
 
-				user=itUsers.next();
+				user = itUsers.next();
 
-				if(found==true && times!=0){
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
+				if (found == true && times != 0) {
+					NodeBT<Integer, Book> toAdd = new NodeBT<>(times, toCompare);
 
-					booksWRating[pos+1]= toAdd;
-				}else{
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, toCompare);
+					booksWRating[pos + 1] = toAdd;
+				} else {
+					NodeBT<Integer, Book> toAdd = new NodeBT<>(0, toCompare);
 
-					booksWRating[pos+1]= toAdd;
+					booksWRating[pos + 1] = toAdd;
 				}
 
-				toCompare= itBook.next();
+				toCompare = itBook.next();
 
 			}
 
-			Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+			Sort<NodeBT<Integer, Book>> toSort = new Sort<>();
 
 			toSort.quicksort(booksWRating);
 
-			int posToPrint= booksWRating.length;
+			int posToPrint = booksWRating.length;
 
-			for(int i= 0; i<10; i++){
+			for (int i = 0; i < 10; i++) {
 
-				System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
+				System.out.println("Id del libro: " + booksWRating[posToPrint - 1].getData().getBook_id());
 
-				System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
+				System.out.println("Titulo: " + booksWRating[posToPrint - 1].getData().getOriginal_title());
 
-				System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
+				System.out.println("Cantidad: " + booksWRating[posToPrint - 1].getKey());
 
-				posToPrint=posToPrint-1;
+				posToPrint = posToPrint - 1;
 			}
 
 		}
@@ -146,7 +154,7 @@ public class Quaries {
 
 		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
 
-		for (User user: users) {
+		for (User user : users) {
 
 			top.insert(user.getRatings().size(), user);
 
@@ -193,7 +201,7 @@ public class Quaries {
 		// Verificar que no se guarde el nan
 		Tuple<Integer, String>[] topRatings = Functions.createLangArray();
 
-		for (User user: users) {
+		for (User user : users) {
 
 			QueueLinkedList<Book> list = user.getReservations();
 			for (int n = 0; n < list.size(); n++) {
@@ -238,8 +246,7 @@ public class Quaries {
 
 		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
 
-		for (User user: users) {
-
+		for (User user : users) {
 
 
 		}
@@ -249,7 +256,6 @@ public class Quaries {
 		//Sort.quicksort(topRatings);
 
 		for (int i = 0; i < 20; i++) {
-
 
 
 		}
