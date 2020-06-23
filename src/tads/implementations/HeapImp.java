@@ -64,93 +64,100 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Ite
 
 	@Override
 	public NodeHeap<K, T> deleteAndReturn() {
+		if(heap==null) {
+			NodeHeap<K, T> toReturn = null;
+			return null;
+		}else {
+			NodeHeap<K, T> toReturn= heap[0];
+			if(last ==0){
+				heap= null;
+			}else {
+				heap[0] = heap[last - 1];
+				heap[last - 1] = null;
+				last--;
 
-		NodeHeap<K, T> toReturn = heap[0];
-		heap[0] = heap[last - 1];
-		heap[last - 1] = null;
-		last--;
+				boolean run = true;
+				int parentPos = 0;
+				int count = 0;
+				int leftChildPos = 2 * parentPos + 1;
+				int rightChildPos = 2 * parentPos + 2;
 
-		boolean run = true;
-		int parentPos = 0;
-		int count=0;
-		int leftChildPos = 2 * parentPos + 1;
-		int rightChildPos = 2 * parentPos + 2;
+				while (run) {
 
-		while (run) {
+					if (leftChildPos > last - 1 || rightChildPos > last - 1) {
 
-			if (leftChildPos > last - 1 || rightChildPos > last - 1) {
+						if (leftChildPos > last - 1 && rightChildPos > last - 1) {
 
-				if (leftChildPos > last - 1 && rightChildPos > last - 1) {
+							run = false;
+							break;
 
-					run = false;
-					break;
+						} else {
 
-				} else {
+							if (leftChildPos > last - 1) leftChildPos = rightChildPos;
+							else if (rightChildPos > last - 1) rightChildPos = leftChildPos;
 
-					if (leftChildPos > last - 1) leftChildPos = rightChildPos;
-					else if (rightChildPos > last - 1) rightChildPos = leftChildPos;
+						}
+
+					}
+
+					if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == heapType
+							|| heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == 0) {
+
+						if (heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == heapType
+								|| heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == 0) {
+
+							run = false;
+
+						}
+
+					}
+
+					if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == -1 * heapType
+							&& heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
+
+						NodeHeap<K, T> padre = heap[parentPos];
+
+						if (heap[leftChildPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
+
+							heap[parentPos] = heap[rightChildPos];
+							heap[rightChildPos] = padre;
+							parentPos = rightChildPos;
+
+						} else {
+
+							heap[parentPos] = heap[leftChildPos];
+							heap[leftChildPos] = padre;
+							parentPos = leftChildPos;
+
+						}
+
+						leftChildPos = 2 * parentPos + 1;
+						rightChildPos = 2 * parentPos + 2;
+
+					} else if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == -1 * heapType) {
+
+						NodeHeap<K, T> padre = heap[parentPos];
+						heap[parentPos] = heap[leftChildPos];
+						heap[leftChildPos] = padre;
+						parentPos = leftChildPos;
+						leftChildPos = 2 * parentPos + 1;
+						rightChildPos = 2 * parentPos + 2;
+
+					} else if (heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
+
+						NodeHeap<K, T> padre = heap[parentPos];
+						heap[parentPos] = heap[rightChildPos];
+						heap[rightChildPos] = padre;
+						parentPos = rightChildPos;
+						rightChildPos = 2 * parentPos + 2;
+						leftChildPos = 2 * parentPos + 1;
+
+					}
 
 				}
-
 			}
-
-			if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == heapType
-					|| heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == 0) {
-
-				if (heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == heapType
-						|| heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == 0) {
-
-					run = false;
-
-				}
-
-			}
-
-			if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == -1 * heapType
-					&& heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
-
-				NodeHeap<K, T> padre = heap[parentPos];
-
-				if (heap[leftChildPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
-
-					heap[parentPos] = heap[rightChildPos];
-					heap[rightChildPos] = padre;
-					parentPos = rightChildPos;
-
-				} else {
-
-					heap[parentPos] = heap[leftChildPos];
-					heap[leftChildPos] = padre;
-					parentPos = leftChildPos;
-
-				}
-
-				leftChildPos = 2 * parentPos + 1;
-				rightChildPos = 2 * parentPos + 2;
-
-			} else if (heap[parentPos].getKey().compareTo(heap[leftChildPos].getKey()) == -1 * heapType) {
-
-				NodeHeap<K, T> padre = heap[parentPos];
-				heap[parentPos] = heap[leftChildPos];
-				heap[leftChildPos] = padre;
-				parentPos = leftChildPos;
-				leftChildPos = 2 * parentPos + 1;
-				rightChildPos = 2 * parentPos + 2;
-
-			} else if (heap[parentPos].getKey().compareTo(heap[rightChildPos].getKey()) == -1 * heapType) {
-
-				NodeHeap<K, T> padre = heap[parentPos];
-				heap[parentPos] = heap[rightChildPos];
-				heap[rightChildPos] = padre;
-				parentPos = rightChildPos;
-				rightChildPos = 2 * parentPos + 2;
-				leftChildPos = 2 * parentPos + 1;
-
-			}
-
+			return toReturn;
 		}
-
-		return toReturn;
 
 	}
 
