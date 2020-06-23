@@ -1,6 +1,6 @@
 package tads.nodes;
 
-public class NodeBT<K extends Comparable<K>, T> {
+public class NodeBT<K extends Comparable<K>, T> implements Comparable<NodeBT<K, T>> {
 
 	private K key;
 	private T data;
@@ -63,4 +63,19 @@ public class NodeBT<K extends Comparable<K>, T> {
 
 	}
 
+	@Override
+	public int compareTo(NodeBT<K,T> toCompare) {
+		if(key instanceof String){
+
+			return ((String) key).compareTo((String) toCompare.key);
+
+		}else if(key instanceof Integer){
+
+			return ((Integer) key).compareTo((Integer) toCompare.key);
+
+		}else{
+			return -1;
+
+		}
+	}
 }
