@@ -87,9 +87,6 @@ public class UploadData {
 
 	private static void saveBook(String[] attributes) {
 
-		// if (! (line.contains(",\"nan\"") || line.contains(",NaN") ||
-		//								line.contains(",nan"))) {
-
 		int n = attributes.length;
 
 		Author[] authorsArray = new Author[n - 7];
@@ -104,9 +101,10 @@ public class UploadData {
 		Book book;
 
 		try {
-			book = new Book(Long.parseLong(attributes[0]), attributes[1], authorsArray,
-					Integer.parseInt(attributes[n - 5]), attributes[n - 4], attributes[n - 3], attributes[n - 2],
-					attributes[n - 1]);
+			book = new Book(Long.parseLong(attributes[0]), attributes[1].substring(1, attributes[1].length()-1), authorsArray,
+					Integer.parseInt(attributes[n - 5]), attributes[n - 4].substring(1, attributes[n-4].length()-1),
+					attributes[n - 3].substring(1, attributes[n-3].length()-1), attributes[n - 2].substring(1, attributes[n-2].length()-1),
+					attributes[n - 1].substring(1, attributes[n-1].length()-1));
 		} catch (NumberFormatException e) {
 
 			book = new Book(Long.parseLong(attributes[0]), attributes[1], authorsArray,
