@@ -27,4 +27,24 @@ public class HashNode<K,T> {
     public void setValue(T value) {
         this.value = value;
     }
+
+    public int compareTo(HashNode<K,T> toCompare){
+
+        if(key instanceof String){
+
+            return ((String) key).compareTo((String) toCompare.key);
+
+        }else if(key instanceof Integer){
+
+            return ((Integer) key).compareTo((Integer) toCompare.key);
+
+        }else{
+            return -1;
+
+        }
+
+    }
+
+
+
 }
