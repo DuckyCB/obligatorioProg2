@@ -3,6 +3,7 @@ package main;
 import entities.Book;
 import entities.Tuple;
 import entities.User;
+import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
 import tads.implementations.*;
 import tads.nodes.HashNode;
@@ -14,7 +15,7 @@ import java.text.DecimalFormat;
 public class Quaries {
 
 	private static ClosedHash<Long, Book> books = UploadData.getBooks();
-	private static OpenHash<Long, User> users = UploadData.getUsers();
+	private static ClosedHash<Long, User> users = UploadData.getUsers();
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden
@@ -59,7 +60,7 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		OpenHash<Long, User> allUsers = UploadData.getUsers(); //all users
+		ClosedHash<Long, User> allUsers = UploadData.getUsers(); //all users
 
 		ClosedHash<Long, Book> booksByRating= UploadData.getBooks(); //all books
 
@@ -75,23 +76,23 @@ public class Quaries {
 
 				int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
 
-				//puede ser que los usuarios tmb sean closed Hush, o un heap?
-				// hago:
-				// ClosedHash<Long, User> allUsers=UploadData.getUsers();
-				// Book withReview= booksByRating.next();
-				// while (booksByRating.hasNext()){
-				//		if (withReview.getId.compareTo(toCompare.getValue().getId)==0 ){ o hago un compare to en book no se
-				//			times=times+1;
-				//			found=true
-				//		}
-				//
-			// }
-			// if(found==true && times!=0){
-			// 		HashNode<Integer, Book> toAdd=  new HashNode(times, toCompare.getValue());
-			// }else{
-			// 		HashNode<Integer, Book> toAdd=  new HashNode(0, toCompare.getValue());
-			// }
-			//	booksWRating[i]= toAdd;
+				Book withReview= booksByRating.next().getValue();
+
+				while (booksByRating.hasNext()){
+						if (withReview.getBook_id()==(toCompare.getValue().getBook_id()) ){ //PUEDO USAR ==????
+							times=times+1;
+							found=true;
+						}
+				}
+				if(found==true && times!=0){
+				 		HashNode<Integer, Book> toAdd=  new HashNode(times, toCompare.getValue());
+
+						booksWRating[i]= toAdd;
+				}else{
+				 		HashNode<Integer, Book> toAdd=  new HashNode(0, toCompare.getValue());
+
+						booksWRating[i]= toAdd;
+				}
 
 			}
 
@@ -128,7 +129,7 @@ public class Quaries {
 		}
 
 		// Tiene que ordenar el topRating usando topRating[i].getKey() como valor
-		Sort.quicksort(topRatings);
+		// Sort.quicksort(topRatings);
 		// No anda el quicksort
 
 		for (int i = 0; i < 10; i++) {
@@ -153,9 +154,45 @@ public class Quaries {
 		solo (eng).
 		Datos esperados del resultado:
 		- Codigo del idioma
-		- Cantidad
-		 */
+		- Cantidad */
 
+		// Verificar que no se guarde el nan
+		Tuple<Integer, String>[] topRatings = new Tuple[22];
+		// Rellenar este array con los idiomas
+
+		for (HashNode<Long, User> pepito: users.getHash()) {
+			if (pepito != null) {
+
+				LinkedList<Book> list = pepito.getValue().getReservations();
+
+				for (int n = 0; n < list.size(); n++) {
+
+					try {
+
+						Book book = list.get(n);
+						// verificar el idioma del libro
+						// sumar +1 a la key del idioma
+
+
+					} catch (InvalidInformationException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+
+			}
+		}
+
+		// Ordenar array de tuplas
+		// Sort.quicksort(topRatings);
+
+		for (int i = 0; i < 5; i++) {
+
+			System.out.println("Codigo del idioma: " + topRatings[i].getValue());
+			System.out.println("Cantidad: " + topRatings[i].getKey());
+
+		}
 
 	}
 
