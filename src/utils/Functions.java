@@ -11,23 +11,27 @@ public class Functions {
 		long summation = 0;
 		int n = 0;
 
-		while (list.size() > 0) {
+		try {
 
-			try {
+			while (list.size() > 0) {
 
 				summation += list.get(0).getRating();
 				n++;
 
-			} catch (InvalidInformationException e) {
-
-				e.printStackTrace();
-
 			}
+
+			return summation / n;
+
+		} catch (InvalidInformationException e) {
+
+			e.printStackTrace();
 
 		}
 
 		return summation / n;
 
 	}
+
+	public static
 
 }

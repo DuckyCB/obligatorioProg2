@@ -4,10 +4,7 @@ import entities.Author;
 import entities.Book;
 import entities.Rating;
 import entities.User;
-import exceptions.FullHashException;
-import exceptions.InvalidInformationException;
-import exceptions.KeyNotFoundException;
-import tads.implementations.ClosedHashOld;
+import tads.implementations.ClosedHash;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,8 +13,8 @@ import java.nio.file.Paths;
 
 public class UploadData {
 
-	private static ClosedHashOld<Long, Book> books = new ClosedHashOld<>(10001);
-	private static ClosedHashOld<Long, User> users = new ClosedHashOld<>(60000);
+	private static ClosedHash<Long, Book> books = new ClosedHash<>(10001);
+	private static ClosedHash<Long, User> users = new ClosedHash<>(60000);
 
 	public static void timeDataLoad() {
 
@@ -38,11 +35,11 @@ public class UploadData {
 
 	}
 
-	public static ClosedHashOld<Long, Book> getBooks() {
+	public static ClosedHash<Long, Book> getBooks() {
 		return books;
 	}
 
-	public static ClosedHashOld<Long, User> getUsers() {
+	public static ClosedHash<Long, User> getUsers() {
 		return users;
 	}
 
@@ -117,52 +114,25 @@ public class UploadData {
 					attributes[n - 1]);
 
 		}
-		try {
 
-			books.put(Long.parseLong(attributes[0]), book);
-
-		} catch (FullHashException e)  {
-
-			System.out.println("El hash esta lleno");
-
-		} catch (InvalidInformationException e) {
-
-			System.out.println("Libro repetido");
-
-		}
+		books.put(Long.parseLong(attributes[0]), book);
 
 	}
 
 	private static void saveRating(String[] attributes) {
 
-		try {
-
-			Rating newRating = new Rating(Integer.parseInt(attributes[1]),
-					books.get(Long.parseLong(attributes[2])));
-			users.put(Long.parseLong(attributes[0]), new User(Long.parseLong(attributes[0])));
-			users.get(Long.parseLong(attributes[0])).getRatings().add(newRating);
-
-		} catch (KeyNotFoundException | InvalidInformationException e) {
-
-			System.out.println("Error");
-
-		} catch (FullHashException e) {
-			e.printStackTrace();
-		}
+		Rating newRating = new Rating(Integer.parseInt(attributes[1]),
+				books.get(Long.parseLong(attributes[2])));
+		users.put(Long.parseLong(attributes[0]), new User(Long.parseLong(attributes[0])));
+		users.get(Long.parseLong(attributes[0])).getRatings().add(newRating);
 
 	}
 
 	private static void saveToRead(String[] attributes) {
 
-		try {
-
 		User user = users.get(Long.parseLong(attributes[0]));
 		Book book = books.get(Long.parseLong(attributes[1]));
 		user.getReservations().add(book);
-
-		} catch (KeyNotFoundException | InvalidInformationException e) {
-			e.printStackTrace();
-		}
 
 	}
 

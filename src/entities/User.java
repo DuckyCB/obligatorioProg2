@@ -5,8 +5,8 @@ import tads.implementations.LinkedList;
 public class User {
 
 	private long user_id;
-	private LinkedList<Rating> ratings;
-	private LinkedList<Book> reservations;
+	private LinkedList<Rating> ratings; // Esto se podria cambiar por stack
+	private LinkedList<Book> reservations;	// Esto se podria cambiar por stack
 
 	public User(long user_id) {
 
