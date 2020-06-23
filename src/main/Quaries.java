@@ -1,15 +1,20 @@
 package main;
 
 import entities.Book;
+import entities.Rating;
 import entities.Tuple;
 import entities.User;
 import exceptions.EmptyQueueException;
 import exceptions.InvalidInformationException;
+import sortingAlgorithms.Sort;
+import tads.nodes.Node;
+import tads.nodes.NodeBT;
 import tads.implementations.*;
 import tads.nodes.HashNode;
 import utils.Functions;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 
 public class Quaries {
 
@@ -43,7 +48,7 @@ public class Quaries {
 
 	}
 
-	public static void top20Books() {
+	public static void top20Books() throws InvalidInformationException {
 		/* Nuevamente considerando los libros pero ahora considerando las
 		evaluaciones recibidas por sus usuario, se deberá hacer un listado de los
 		Top 20 de libros que más cantidad de evaluaciones recibieron (independiente
@@ -53,43 +58,72 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		ClosedHash<Long, User> allUsers = UploadData.getUsers(); //all users
+		// tengo en books y users todos los books y users
 
-		ClosedHash<Long, Book> booksByRating= UploadData.getBooks(); //all books
+		NodeBT<Integer, Book>[] booksWRating= new NodeBT[ books.getSize()]; // donde se guardaran los libros
 
-		HashNode<Integer, Book>[] booksWRating= new HashNode[ booksByRating.getSize()]; // donde se guardaran los libros
+		Iterator<Book> itBook= books.iterator();
 
-		for (int i=0; i<allUsers.getSize(); i++){
+		while(itBook.hasNext()){
 
-			while(booksByRating.hasNext()){
+			Book toCompare= itBook.next();
 
-				HashNode<Long, Book> toCompare= booksByRating.next();
+			boolean found=false;
 
-				boolean found=false;
+			int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
 
-				int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
+			int pos=-1; // posicion a guardar en el vector!
 
-				Book withReview= booksByRating.next().getValue();
+			Iterator<User> itUsers= users.iterator();
 
-				while (booksByRating.hasNext()){
-						if (withReview.getBook_id()==(toCompare.getValue().getBook_id()) ){ //PUEDO USAR ==????
-							times=times+1;
-							found=true;
-						}
+			while (itUsers.hasNext()){
+
+				User user=itUsers.next();
+
+				LinkedList<Rating> ratings= user.getRatings(); // todos los ratings
+
+				for(int i=0; i< ratings.size(); i++){
+
+					Book ratingBook = ratings.get(i).getBook(); // con queue linked list no se me rompe?
+
+					if(ratingBook.getBook_id()== toCompare.getBook_id()){
+
+						times=times+1;
+
+						found=true;
+
+					}
+
 				}
+
 				if(found==true && times!=0){
-				 		HashNode<Integer, Book> toAdd=  new HashNode(times, toCompare.getValue());
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
 
-						booksWRating[i]= toAdd;
+					booksWRating[pos+1]= toAdd;
 				}else{
-				 		HashNode<Integer, Book> toAdd=  new HashNode(0, toCompare.getValue());
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, toCompare);
 
-						booksWRating[i]= toAdd;
+					booksWRating[pos+1]= toAdd;
 				}
 
 			}
 
-			//como los ordeno!!! adaptar bublesort a nodos (no lo arreglo porque estoy cansada)!!!!
+			Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+
+			toSort.quicksort(booksWRating);
+
+			int posToPrint= booksWRating.length;
+
+			for(int i= 0; i<10; i++){
+
+				System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
+
+				System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
+
+				System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
+
+				posToPrint=posToPrint-1;
+			}
 
 		}
 

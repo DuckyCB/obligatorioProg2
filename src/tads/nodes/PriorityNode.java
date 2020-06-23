@@ -1,4 +1,4 @@
-package utils.nodes;
+package tads.nodes;
 
 public class PriorityNode<T> {
 
