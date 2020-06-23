@@ -2,34 +2,25 @@ package utils;
 
 import entities.Rating;
 import entities.Tuple;
-import exceptions.InvalidInformationException;
-import tads.implementations.LinkedList;
+import exceptions.EmptyQueueException;
+import tads.implementations.QueueLinkedList;
 
 public class Functions {
 
-	public static float linkedListAverage(LinkedList<Rating> list) {
+	public static float linkedListAverage(QueueLinkedList<Rating> list) throws EmptyQueueException {
 
 		long summation = 0;
-		int n = 0;
+		int n = list.size();
 
-		try {
+		for (int i = 0; i < n; i++) {
 
-			while (list.size() > 0) {
-
-				summation += list.get(0).getRating();
-				n++;
-
-			}
-
-			return summation / n;
-
-		} catch (InvalidInformationException e) {
-
-			e.printStackTrace();
+			Rating rating = list.dequeue();
+			summation += rating.getRating();
+			list.enqueue(rating);
 
 		}
 
-		return summation / n;
+		return (float) summation / n;
 
 	}
 
