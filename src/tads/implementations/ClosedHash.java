@@ -56,7 +56,6 @@ public class ClosedHash<K, T> implements MyHash<K, T>, Iterator<HashNode<K,T>> {
 	public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
 		int place = key.hashCode() % hashSize;
-
 		if (hash[place] == null) {
 			System.out.println(place);
 			throw new InvalidInformationException();
