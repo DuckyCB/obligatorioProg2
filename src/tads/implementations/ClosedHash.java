@@ -8,6 +8,7 @@ import java.util.Iterator;
 public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 	private static int LINEAL_COLLISION_FUNCTION = 1;
+
 	private HashEntry<K, T>[] hashTable;
 	private int size;
 	private int defaultCollisionFunction = ClosedHash.LINEAL_COLLISION_FUNCTION;
@@ -104,7 +105,9 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 	@Override
 	public boolean contains(K key) {
+
 		return this.get(key) != null;
+
 	}
 
 	private int internalHashcodeWithCollision(K key, int attempt) {

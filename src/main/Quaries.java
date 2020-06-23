@@ -13,11 +13,12 @@ import tads.nodes.HashNode;
 import utils.Functions;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 
 public class Quaries {
 
-	private static ClosedHashOld<Long, Book> books = UploadData.getBooks();
-	private static ClosedHashOld<Long, User> users = UploadData.getUsers();
+	private static ClosedHash<Long, Book> books = UploadData.getBooks();
+	private static ClosedHash<Long, User> users = UploadData.getUsers();
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden
@@ -30,24 +31,18 @@ public class Quaries {
 
 		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
 		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
-		HashNode<Long, Book>[] temp = books.getHash();
 
-		Comparable<Integer>[] size = new Comparable[150000];
-		Heap<Integer> topBooks = new Heap(size, true);
+		for (User user: users) {
 
-		for (HashNode<Long, Book> bookNode : temp) {
-
-			if (bookNode != null) {
-
-				//topBooks.insert(bookNode.getValue());
-				// Completar esto
-
-			}
+			topTen.insert(user.);
 
 		}
 
-		//Pato no quise sobreescribir sobre lo que hiciste, pero habia pensado que la parte uno podía ser como la parte dos
-		// pero en vez de comparar respecto a los rating, compararlos con las reservas
+		for (int i = 0; i < 10; i++) {
+
+
+
+		}
 
 
 	}
@@ -66,9 +61,11 @@ public class Quaries {
 
 		NodeBT<Integer, Book>[] booksWRating= new NodeBT[ books.getSize()]; // donde se guardaran los libros
 
-		while(books.hasNext()){
+		Iterator<Book> itBook= books.iterator();
 
-			HashNode<Long, Book> book= books.next();
+		while(itBook.hasNext()){
+
+			Book toCompare= itBook.next();
 
 			boolean found=false;
 
@@ -76,11 +73,11 @@ public class Quaries {
 
 			int pos=-1; // posicion a guardar en el vector!
 
-			Book toCompare= book.getValue(); // libro a comparar
+			Iterator<User> itUsers= users.iterator();
 
-			while (users.hasNext()){
+			while (itUsers.hasNext()){
 
-				User user=users.next().getValue();
+				User user=itUsers.next();
 
 				LinkedList<Rating> ratings= user.getRatings(); // todos los ratings
 
@@ -99,13 +96,13 @@ public class Quaries {
 				}
 
 				if(found==true && times!=0){
-				 		NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, toCompare);
 
-						booksWRating[pos+1]= toAdd;
+					booksWRating[pos+1]= toAdd;
 				}else{
-				 		NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, toCompare);
+					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, toCompare);
 
-						booksWRating[pos+1]= toAdd;
+					booksWRating[pos+1]= toAdd;
 				}
 
 			}
@@ -131,6 +128,7 @@ public class Quaries {
 
 	}
 
+
 	public static void top10Users() {
 		/* Obtener el Top 10 de usuarios que realizaron mayor cantidad de
 		evaluaciones a libros y ordenarlo por rating promedio descendente. La
@@ -142,18 +140,21 @@ public class Quaries {
 		- Cantidad
 		- Rating promedio */
 
-		HeapImp<Integer, User> topTen = new HeapImp<>(100000, 1);
-		// Recorrer usuarios
-		User user = new User(123); // esto es solo para tener un usuario y que no me tire errores
-	 	topTen.insert(user.getRatings().size(), user);
+		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
+
+		for (User user: users) {
+
+			top.insert(user.getRatings().size(), user);
+
+		}
 
 		Tuple<Float, User>[] topRatings = new Tuple[10];
 
 		for (int i = 0; i < 10; i++) {
 
-			User userTemp = topTen.deleteAndReturn().getData();
+			User userTemp = top.deleteAndReturn().getData();
 			float average = Functions.linkedListAverage(userTemp.getRatings());
-			topRatings[0] = new Tuple(average, topTen.deleteAndReturn());
+			topRatings[0] = new Tuple(average, top.deleteAndReturn());
 
 		}
 
@@ -189,28 +190,24 @@ public class Quaries {
 		Tuple<Integer, String>[] topRatings = new Tuple[22];
 		// Rellenar este array con los idiomas
 
-		for (HashNode<Long, User> pepito: users.getHash()) {
-			if (pepito != null) {
+		for (User user: users) {
 
-				LinkedList<Book> list = pepito.getValue().getReservations();
+			LinkedList<Book> list = user.getReservations();
+			for (int n = 0; n < list.size(); n++) {
 
-				for (int n = 0; n < list.size(); n++) {
+				try {
 
-					try {
-
-						Book book = list.get(n);
-						// verificar el idioma del libro
-						// sumar +1 a la key del idioma
+					Book book = list.get(n);
+					// verificar el idioma del libro
+					// sumar +1 a la key del idioma
 
 
-					} catch (InvalidInformationException e) {
-						e.printStackTrace();
-					}
-
+				} catch (InvalidInformationException e) {
+					e.printStackTrace();
 				}
 
-
 			}
+
 		}
 
 		// Ordenar array de tuplas
@@ -238,6 +235,14 @@ public class Quaries {
 		- Cantidad */
 
 		System.out.println("Esta es una pregunta filosofica, puede tener muchas respuestas");
+
+		Tuple<Integer, Tuple<String, Integer>>[] topRatings = new Tuple[20];
+
+		for (int i = 0; i < 20; i++) {
+
+
+
+		}
 
 	}
 
