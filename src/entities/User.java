@@ -1,18 +1,19 @@
 package entities;
 
 import tads.implementations.LinkedList;
+import tads.implementations.QueueLinkedList;
 
 public class User {
 
 	private long user_id;
-	private LinkedList<Rating> ratings; // Esto se podria cambiar por stack
-	private LinkedList<Book> reservations;	// Esto se podria cambiar por stack
+	private QueueLinkedList<Rating> ratings;
+	private QueueLinkedList<Book> reservations;
 
 	public User(long user_id) {
 
 		this.user_id = user_id;
-		this.ratings = new LinkedList<>();
-		this.reservations = new LinkedList<>();
+		this.ratings = new QueueLinkedList<>();
+		this.reservations = new QueueLinkedList<>();
 
 	}
 
@@ -23,17 +24,17 @@ public class User {
 		this.user_id = user_id;
 	}
 
-	public LinkedList<Rating> getRatings() {
+	public QueueLinkedList<Rating> getRatings() {
 		return ratings;
 	}
-	public void setRatings(LinkedList<Rating> ratings) {
+	public void setRatings(QueueLinkedList<Rating> ratings) {
 		this.ratings = ratings;
 	}
 
-	public LinkedList<Book> getReservations() {
+	public QueueLinkedList<Book> getReservations() {
 		return reservations;
 	}
-	public void setReservations(LinkedList<Book> reservations) {
+	public void setReservations(QueueLinkedList<Book> reservations) {
 		this.reservations = reservations;
 	}
 }
