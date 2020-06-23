@@ -3,18 +3,21 @@ package tads.implementations;
 import tads.interfaces.MyHeapImp;
 import tads.nodes.NodeHeap;
 
-public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T> {
+import java.util.Iterator;
+
+public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Iterator<NodeHeap<K,T>> {
 
 	private NodeHeap[] heap;
 	private int last;
 	private int heapType;
+	private int it;
 
 	public HeapImp(int sizeHeap, int heapType) {
 
 		this.heap = new NodeHeap[sizeHeap];
 		this.heapType = heapType;
 		this.last = 0;
-
+		this.it = -1;
 	}
 
 	@Override
@@ -165,4 +168,32 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T> {
 		}
 	}
 
+	@Override
+	public boolean hasNext() {
+
+		if (heap[it+1]!=null){
+
+			it=it+1;
+
+			return true;
+
+		}else{
+
+			it=-1;
+
+			return false;
+
+		}
+
+	}
+
+	@Override
+	public NodeHeap<K, T> next() {
+
+		NodeHeap<K,T> next= heap[it+1];
+
+		it=it+1;
+
+		return next;
+	}
 }

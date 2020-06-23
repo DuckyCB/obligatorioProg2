@@ -7,6 +7,7 @@ import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
 import tads.implementations.*;
 import tads.nodes.HashNode;
+import tads.nodes.NodeHeap;
 import utils.Functions;
 
 import java.text.DecimalFormat;
@@ -43,6 +44,10 @@ public class Quaries {
 
 		}
 
+		//Pato no quise sobreescribir sobre lo que hiciste, pero habia pensado que la parte uno podía ser como la parte dos
+		// pero en vez de comparar respecto a los rating, compararlos con las reservas
+
+
 	}
 
 	public static void top20Books() {
@@ -54,31 +59,46 @@ public class Quaries {
 		- Id del libro
 		- Titulo
 		- Cantidad */
-		ClosedHash<Long, User> allUsers = UploadData.getUsers(); //all users
-		HeapImp<Integer, Book> booksByRating= new HeapImp<>(UploadData.getBooks().getSize(),1);
-		for (int i=0; i<allUsers.getSize(); i++){
-			int pos=0;
-			//uso iterador de OpenHash para obtener el book a comparar
-			// ej, le pongo toCompare al libro en pos i
-			boolean found=false;
-			for(int j=0;j< booksByRating.size();j++){
-				// MAL PLANTEADA, BUEN CONCEPTO(?)
-				// if(toCompare.getBook_id.compareTo(booksByRating(pos j)) == 0)){
-				// 		Le sumo uno a la key!! (solo dios sabe como)
-				// 		found=true;
-				// }
-			}
-			if (found==false){
-				//NodeHeap<Integer,Book>= new NodeHeap<0, toCompare>()
-			}
-			// se ordena el heap y queda!
 
+		ClosedHash<Long, User> allUsers = UploadData.getUsers(); //all users
+
+		ClosedHash<Long, Book> booksByRating= UploadData.getBooks(); //all books
+
+		HashNode<Integer, Book>[] booksWRating= new HashNode[ booksByRating.getSize()]; // donde se guardaran los libros
+
+		for (int i=0; i<allUsers.getSize(); i++){
+
+			while(booksByRating.hasNext()){
+
+				HashNode<Long, Book> toCompare= booksByRating.next();
+
+				boolean found=false;
+
+				int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
+
+				Book withReview= booksByRating.next().getValue();
+
+				while (booksByRating.hasNext()){
+						if (withReview.getBook_id()==(toCompare.getValue().getBook_id()) ){ //PUEDO USAR ==????
+							times=times+1;
+							found=true;
+						}
+				}
+				if(found==true && times!=0){
+				 		HashNode<Integer, Book> toAdd=  new HashNode(times, toCompare.getValue());
+
+						booksWRating[i]= toAdd;
+				}else{
+				 		HashNode<Integer, Book> toAdd=  new HashNode(0, toCompare.getValue());
+
+						booksWRating[i]= toAdd;
+				}
+
+			}
+
+			//como los ordeno!!! adaptar bublesort a nodos (no lo arreglo porque estoy cansada)!!!!
 
 		}
-
-
-
-
 
 	}
 

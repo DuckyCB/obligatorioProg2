@@ -5,18 +5,23 @@ import exceptions.InvalidInformationException;
 import exceptions.KeyNotFoundException;
 import tads.interfaces.MyHash;
 import tads.nodes.HashNode;
+import tads.nodes.NodeHeap;
 
-public class ClosedHash<K, T> implements MyHash<K, T> {
+import java.util.Iterator;
+
+public class ClosedHash<K, T> implements MyHash<K, T>, Iterator<HashNode<K,T>> {
 
 	private HashNode<K, T>[] hash;
 	private int hashSize;
 	private int size;
+	private int it;
 
 	public ClosedHash(int hashSize) {
 
 		this.hash = new HashNode[hashSize];
 		this.hashSize = hashSize;
-		int size=0;
+		this.size=0;
+		this.it=-1;
 
 	}
 
@@ -76,5 +81,34 @@ public class ClosedHash<K, T> implements MyHash<K, T> {
 
 		return size;
 
+	}
+
+	@Override
+	public boolean hasNext() {
+
+		if (hash[it+1]!=null){
+
+			it=it+1;
+
+			return true;
+
+		}else{
+
+			it=-1;
+
+			return false;
+
+		}
+
+	}
+
+	@Override
+	public HashNode<K, T> next() {
+
+		HashNode<K,T> next= hash[it+1];
+
+		it=it+1;
+
+		return next;
 	}
 }
