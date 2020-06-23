@@ -45,6 +45,8 @@ public class Menu {
 
 		}
 
+		mainMenu();
+
 	}
 
 
@@ -87,7 +89,7 @@ public class Menu {
 				break;
 
 			case "6":
-				Menu.mainMenu();
+				mainMenu();
 				break;
 
 			default:
@@ -96,6 +98,8 @@ public class Menu {
 				break;
 
 		}
+
+		mainMenu();
 
 	}
 

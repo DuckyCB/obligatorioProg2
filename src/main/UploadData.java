@@ -28,7 +28,7 @@ public class UploadData {
 		readFromCSV("to_read.csv");
 
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		System.out.print("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
+		System.out.println("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
 
 		// ESTO PUEDE HACER EXPLOTAR TOD0
 		System.gc();
