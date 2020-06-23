@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 public class UploadData {
 
 	private static ClosedHash<Long, Book> books = new ClosedHash<>(10001);
-	private static ClosedHash<Long, User> users = new ClosedHash<>(50000);
+	private static ClosedHash<Long, User> users = new ClosedHash<>(60000);
 
 	public static void timeDataLoad() {
 
