@@ -124,7 +124,7 @@ public class UploadData {
 		Rating newRating = new Rating(Integer.parseInt(attributes[1]),
 				books.get(Long.parseLong(attributes[2])));
 		users.put(Long.parseLong(attributes[0]), new User(Long.parseLong(attributes[0])));
-		users.get(Long.parseLong(attributes[0])).getRatings().add(newRating);
+		users.get(Long.parseLong(attributes[0])).getRatings().enqueue(newRating);
 
 	}
 
@@ -132,7 +132,7 @@ public class UploadData {
 
 		User user = users.get(Long.parseLong(attributes[0]));
 		Book book = books.get(Long.parseLong(attributes[1]));
-		user.getReservations().add(book);
+		user.getReservations().enqueue(book);
 
 	}
 

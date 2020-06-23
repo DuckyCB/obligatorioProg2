@@ -4,6 +4,7 @@ import entities.Book;
 import entities.Rating;
 import entities.Tuple;
 import entities.User;
+import exceptions.EmptyQueueException;
 import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
 import tads.nodes.Node;
@@ -187,22 +188,20 @@ public class Quaries {
 		- Cantidad */
 
 		// Verificar que no se guarde el nan
-		Tuple<Integer, String>[] topRatings = new Tuple[22];
-		// Rellenar este array con los idiomas
+		Tuple<Integer, String>[] topRatings = Functions.createLangArray();
 
 		for (User user: users) {
 
-			LinkedList<Book> list = user.getReservations();
+			QueueLinkedList<Book> list = user.getReservations();
 			for (int n = 0; n < list.size(); n++) {
 
 				try {
 
-					Book book = list.get(n);
-					// verificar el idioma del libro
-					// sumar +1 a la key del idioma
+					Book book = list.dequeue();
+					Functions.addToLangage(book.getLanguage_code(), topRatings);
+					list.enqueue(book);
 
-
-				} catch (InvalidInformationException e) {
+				} catch (EmptyQueueException e) {
 					e.printStackTrace();
 				}
 
