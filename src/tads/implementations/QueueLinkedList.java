@@ -22,13 +22,8 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 
 		Node<T> newNode = new Node<>(element, null);
 
-		if (isEmpty()) {
-
-			first = newNode;
-
-		} else {
-
-			last.setNext(newNode);
+		if (isEmpty()) first = newNode;
+		else last.setNext(newNode);
 
 		}
 
@@ -44,7 +39,7 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 		if (isEmpty()) throw new EmptyQueueException();
 		T element = first.getValue();
 		first.setNext(first.getNext());
-		size=size-1;
+		size--;
 		return element;
 
 	}
@@ -58,7 +53,9 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 
 	@Override
 	public int size() {
+
 		return size;
+
 	}
 
 }

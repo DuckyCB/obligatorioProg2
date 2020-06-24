@@ -58,9 +58,9 @@ public class Quaries {
 			pos= pos+1;
 
 		}
-		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		//Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
 
-		toSort.quicksort(allBooks);
+		//toSort.quicksort(allBooks);
 
 		int posToPrint= allBooks.length;
 
@@ -144,9 +144,9 @@ public class Quaries {
 
 		}
 
-		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		//Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
 
-		toSort.quicksort(booksWRating);
+		//toSort.quicksort(booksWRating);
 
 		int posToPrint= booksWRating.length;
 
@@ -192,11 +192,9 @@ public class Quaries {
 
 		}
 
-		// Tiene que ordenar el topRating usando topRating[i].getKey() como valor
-		// Sort.quicksort(topRatings);
-		// No anda el quicksort
+		Sort.quicksort(topRatings);
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 9; i >= 0; i--) {
 
 			User userTemp = topRatings[i].getValue();
 			System.out.println("ID del usuario: " + userTemp.getUser_id());
@@ -246,13 +244,13 @@ public class Quaries {
 			Functions.addToLangage(book.getLanguage_code(), topRatings, book.getReservationUsers().size());
 
 		}
-		
+
 		Sort.quicksort(topRatings);
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 20; i > 15; i--) {
 
 			System.out.println("Codigo del idioma: " + topRatings[i].getValue());
-			System.out.println("Cantidad: " + topRatings[i].getKey());
+			System.out.println("Cantidad: " + topRatings[i].getKey() + "\n");
 
 		}
 

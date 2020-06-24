@@ -26,7 +26,6 @@ public class Functions {
 
 	public static void addToLangage(String lang, Tuple<Integer, String>[] languages, int number) {
 
-		System.out.println(lang);
 		switch (lang) {
 			case "eng":
 			case "en":
@@ -34,7 +33,6 @@ public class Functions {
 			case "en-GB":
 			case "en-US":
 				languages[0].setKey(languages[0].getKey() + number);
-				System.out.println("entro");
 				break;
 			case "ara":
 				languages[1].setKey(languages[1].getKey() + number);
