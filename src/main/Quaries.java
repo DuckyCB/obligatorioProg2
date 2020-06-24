@@ -29,7 +29,7 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		NodeBT<Integer, Book>[] booksReservation= new NodeBT[books.getSize()];
+		Tuple<Integer, Book>[] booksReservation= new Tuple[books.getSize()];
 
 		int i=0;
 
@@ -37,14 +37,14 @@ public class Quaries {
 
 			int reservas= book.getReservationUsers().size();
 
-			 NodeBT<Integer, Book> toAdd= new NodeBT<>(reservas,book);
+			Tuple<Integer, Book> toAdd= new Tuple<>(reservas,book);
 
 			booksReservation[i]	= toAdd;
 
 			i++;
 
 		}
-		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		Sort<Integer,Book> toSort= new Sort<>();
 
 		toSort.quicksort(booksReservation);
 
@@ -54,9 +54,9 @@ public class Quaries {
 
 		while( j<10){
 
-			System.out.println("Id del libro: "+ booksReservation[posToPrint-1].getData().getBook_id());
+			System.out.println("Id del libro: "+ booksReservation[posToPrint-1].getValue().getBook_id());
 
-			System.out.println("Titulo: "+ booksReservation[posToPrint-1].getData().getOriginal_title());
+			System.out.println("Titulo: "+ booksReservation[posToPrint-1].getValue().getOriginal_title());
 
 			System.out.println("Cantidad: " + booksReservation[posToPrint-1].getKey());
 
@@ -80,7 +80,7 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		NodeBT<Integer, Book>[] booksWRating= new NodeBT[books.getSize()];
+		Tuple<Integer, Book>[] booksWRating= new Tuple[books.getSize()];
 
 		int i=0;
 
@@ -88,7 +88,7 @@ public class Quaries {
 
 			int ratings= book.getRankedUsers().size();
 
-			NodeBT<Integer, Book> toAdd= new NodeBT<>(ratings,book);
+			Tuple<Integer, Book> toAdd= new Tuple<>(ratings,book);
 
 			booksWRating[i]	= toAdd;
 
@@ -96,7 +96,7 @@ public class Quaries {
 
 		}
 
-		Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		Sort<Integer,Book> toSort= new Sort<>();
 
 		toSort.quicksort(booksWRating);
 
@@ -104,9 +104,9 @@ public class Quaries {
 
 		for(int j= 0; j<10; j++){
 
-			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
+			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getValue().getBook_id());
 
-			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
+			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getValue().getOriginal_title());
 
 			System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
 
