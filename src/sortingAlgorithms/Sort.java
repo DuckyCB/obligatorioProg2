@@ -18,7 +18,7 @@ public class Sort{
 
             rQuicksort(toOrder, low,posPiv-1);
 
-            rQuicksort(toOrder,posPiv+1, high);
+            rQuicksort(toOrder, posPiv + 1, high);
 
         }
 

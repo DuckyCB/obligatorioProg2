@@ -2,6 +2,7 @@ package main;
 
 import dataBase.DataBase;
 import entities.*;
+import javafx.scene.chart.ScatterChart;
 import sortingAlgorithms.Sort;
 import sortingAlgorithms.Sorts;
 import tads.implementations.*;
@@ -95,15 +96,12 @@ public class Quaries {
 		- Cantidad
 		- Rating promedio */
 
-		// HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
 		Tuple<Float, User>[] topUsers = new Tuple[users.getSize()];
 
 		int i = 0;
 
-
 		for (User user : users) {
 
-			// top.insert(user.getRatings().size(), user);
 			if(user.getRatings()==null){
 				topUsers[i] = new Tuple(0, user);
 			}else {
@@ -112,9 +110,11 @@ public class Quaries {
 			i++;
 		}
 
-
-
-		Sort.quicksort(topUsers);
+		try {
+			Sort.quicksort(topUsers);
+		} catch (StackOverflowError e) {
+			System.out.println("F");
+		}
 
 		Tuple<Float, User>[] topRatings = new Tuple[10];
 
@@ -127,7 +127,11 @@ public class Quaries {
 		}
 
 		// Crashea el quicksort, tira un null pointer exception
-		Sort.quicksort(topRatings);
+		try {
+			Sort.quicksort(topRatings);
+		} catch (StackOverflowError e) {
+			System.out.println("F");
+		}
 
 		for (int n = 9; n >= 0; n--) {
 
