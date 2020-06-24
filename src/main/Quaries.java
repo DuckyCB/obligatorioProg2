@@ -118,6 +118,7 @@ public class Quaries {
 
 		}
 
+		// Crashea el quicksort, tira un null pointer exception
 		Sort.quicksort(topRatings);
 
 		for (int n = 9; n >= 0; n--) {
@@ -193,6 +194,14 @@ public class Quaries {
 		- Autor
 		- Año de publicacion
 		- Cantidad */
+
+
+
+		for (Book book: books) {
+
+
+
+		}
 
 		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
 		ClosedHash<String, Tuple<Integer, Integer>> authors = new ClosedHash<>(20000);
