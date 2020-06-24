@@ -2,15 +2,15 @@ package sortingAlgorithms;
 
 import entities.Tuple;
 
-public class Sort<K extends Comparable<K>, T>{
+public class Sort{
 
-    public void quicksort(Tuple<K, T>[] toOrder){
+    public static <K extends Comparable<K>, T> void quicksort(Tuple<K, T>[] toOrder){
 
         rQuicksort(toOrder, 0, toOrder.length-1);
 
     }
 
-    private void rQuicksort(Tuple<K, T>[] toOrder, int low, int high){
+    private static <K extends Comparable<K>, T> void rQuicksort(Tuple<K, T>[] toOrder, int low, int high){
 
         if (low< high){
 
@@ -24,7 +24,7 @@ public class Sort<K extends Comparable<K>, T>{
 
     }
 
-    private int posPiv(Tuple<K, T>[] toOrder, int low, int high){
+    private static <K extends Comparable<K>, T> int posPiv(Tuple<K, T>[] toOrder, int low, int high){
 
         Tuple<K, T> pivot= toOrder[high];
 
@@ -48,7 +48,7 @@ public class Sort<K extends Comparable<K>, T>{
 
     }
 
-    private void swap(Tuple<K, T>[] toOrder, int toChange1, int toChange2){
+    private static <K extends Comparable<K>, T> void swap(Tuple<K, T>[] toOrder, int toChange1, int toChange2){
 
         Tuple<K, T> oldMin= toOrder[toChange1];
 

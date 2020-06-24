@@ -198,9 +198,8 @@ public class Quaries {
 			Functions.addToLangage(book.getLanguage_code(), topRatings, book.getReservationUsers().size());
 
 		}
-
-		// Ordenar array de tuplas
-		// Sort.quicksort(topRatings);
+		
+		Sort.quicksort(topRatings);
 
 		for (int i = 0; i < 5; i++) {
 
