@@ -3,9 +3,11 @@ package main;
 import dataBase.DataBase;
 import entities.*;
 import sortingAlgorithms.Sort;
+import sortingAlgorithms.Sorts;
 import tads.implementations.*;
 import utils.Functions;
 
+import javax.security.sasl.AuthorizeCallback;
 import java.text.DecimalFormat;
 
 public class Quaries {
@@ -153,25 +155,6 @@ public class Quaries {
 
 		Tuple<Integer, String>[] topRatings = Functions.createLangArray();
 
-		/*for (User user : users) {
-
-			QueueLinkedList<Book> list = user.getReservations();
-			for (int n = 0; n < list.size(); n++) {
-
-				try {
-
-					Book book = list.dequeue();
-					Functions.addToLangage(book.getLanguage_code(), topRatings);
-					list.enqueue(book);
-
-				} catch (EmptyQueueException e) {
-					e.printStackTrace();
-				}
-
-			}
-
-		}*/
-
 		for (Book book: books) {
 
 			Functions.addToLanguage(book.getLanguage_code(), topRatings, book.getReservation().size());
@@ -201,46 +184,50 @@ public class Quaries {
 		- Año de publicacion
 		- Cantidad */
 
-		QueueLinkedList<Tuple<Integer, Author>> forYear= new QueueLinkedList();
-
-		int totalSize=0; // me va a dar un mega vector
-
-		for (Book book:books){
-
-			//String[] allAuthors= book.getAuthors();// mal los autores?
-
-
-
-
-		}
-
-		//
-
-		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
-		ClosedHash<String, Tuple<Integer, Integer>> authors = new ClosedHash<>(20000);
+		ClosedHash<AuthorYear, AuthorYearCounter> table = new ClosedHash<>(14000);
+		int count = 0;
 
 		for (Book book: books) {
 
-			for (int i = 0; i < book.getAuthors().length; i++) {
+			int year = book.getOriginal_publication_year();
 
-				//try {
+			for (int authorID: book.getAuthors()) {
 
-					//authors.put(book.getAuthors()[i].getName(), new Tuple<>());
+				Author author = authors.get(authorID);
+				AuthorYear authoryear = new AuthorYear(year, author);
+				AuthorYearCounter authorYearCounter = table.get(authoryear);
+				if (authorYearCounter == null) {
 
-				//} catch (Exception e) {
+					authorYearCounter = new AuthorYearCounter(year, author);
+					table.put(authoryear, authorYearCounter);
+					count++;
 
-				//}
+				} else {
+
+					authorYearCounter.incrementCounter();
+
+				}
 
 			}
 
 		}
 
-		Tuple<Integer, Tuple<String, Integer>>[] topRatings = new Tuple[20];
+		AuthorYearCounter[] arr = new AuthorYearCounter[count];
+		int i = 0;
 
-		//Sort.quicksort(topRatings);
+		for (AuthorYearCounter authorYearCounter: table) {
 
-		for (int i = 0; i < 20; i++) {
+			arr[i++] = authorYearCounter;
 
+		}
+
+		Sorts.quicksort(arr);
+
+		for (int n = 1; n < 21; n++) {
+
+			System.out.println("Author: " + arr[count - n].getAuthor().getName());
+			System.out.println("Año de publicacion: " + arr[count - n].getYear());
+			System.out.println("Cantidad: " + arr[count - n].getCounter() + "\n");
 
 		}
 
