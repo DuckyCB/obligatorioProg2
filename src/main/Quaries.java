@@ -52,23 +52,13 @@ public class Quaries {
 
 		int posToPrint= booksReservation.length;
 
-		int j=0;
+		for (int n = 9; n >= 0; n--) {
 
-		while( j<10){
-
-			System.out.println("Id del libro: "+ booksReservation[posToPrint-1].getValue().getBook_id());
-
-			System.out.println("Titulo: "+ booksReservation[posToPrint-1].getValue().getOriginal_title());
-
-			System.out.println("Cantidad: " + booksReservation[posToPrint-1].getKey());
-
-			posToPrint=posToPrint-1;
-
-			j++;
+			System.out.println("Id del libro: " + booksReservation[n].getValue().getBook_id());
+			System.out.println("Titulo: " + booksReservation[n].getValue().getOriginal_title());
+			System.out.println("Cantidad: " + booksReservation[n].getKey() + "\n");
 
 		}
-
-
 
 	}
 
@@ -142,7 +132,7 @@ public class Quaries {
 
 			User userTemp = top.deleteAndReturn().getData();
 			float average = Functions.linkedListAverage(userTemp.getRatings());
-			topRatings[0] = new Tuple(average, top.deleteAndReturn());
+			topRatings[i] = new Tuple(average, top.deleteAndReturn());
 
 		}
 
@@ -154,7 +144,7 @@ public class Quaries {
 			System.out.println("ID del usuario: " + userTemp.getUser_id());
 			System.out.println("Cantidad: " + userTemp.getRatings().size());
 			DecimalFormat decimalFormat = new DecimalFormat("#.##");
-			System.out.println("Rating promedio" + decimalFormat.format(topRatings[i].getKey()));
+			System.out.println("Rating promedio" + decimalFormat.format(topRatings[i].getKey()) + "\n");
 
 		}
 
@@ -229,13 +219,13 @@ public class Quaries {
 
 			for (int i = 0; i < book.getAuthors().length; i++) {
 
-				try {
+				//try {
 
-					authors.put(book.getAuthors()[i].getName(), new Tuple<>());
+					//authors.put(book.getAuthors()[i].getName(), new Tuple<>());
 
-				} catch (Exception e) {
+				//} catch (Exception e) {
 
-				}
+				//}
 
 			}
 

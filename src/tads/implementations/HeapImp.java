@@ -63,14 +63,19 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Ite
 
 	@Override
 	public NodeHeap<K, T> deleteAndReturn() {
-		if(heap==null) {
+
+		if (heap == null) {
+
 			NodeHeap<K, T> toReturn = null;
 			return null;
-		}else {
+
+		} else {
+
 			NodeHeap<K, T> toReturn= heap[0];
-			if(last ==0){
-				heap= null;
-			}else {
+
+			if(last ==0) heap= null;
+			else {
+
 				heap[0] = heap[last - 1];
 				heap[last - 1] = null;
 				last--;
@@ -177,16 +182,14 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Ite
 	@Override
 	public boolean hasNext() {
 
-		if (heap[it+1]!=null){
+		if (heap[it+1] != null) {
 
-			it=it+1;
-
+			it++;
 			return true;
 
-		}else{
+		} else {
 
-			it=-1;
-
+			it--;
 			return false;
 
 		}
@@ -196,10 +199,10 @@ public class HeapImp<K extends Comparable<K>, T> implements MyHeapImp<K, T>, Ite
 	@Override
 	public NodeHeap<K, T> next() {
 
-		NodeHeap<K,T> next= heap[it+1];
-
-		it=it+1;
-
+		NodeHeap<K,T> next = heap[it+1];
+		it++;
 		return next;
+
 	}
+
 }

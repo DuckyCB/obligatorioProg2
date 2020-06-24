@@ -65,6 +65,7 @@ public class Menu {
 		Scanner myObj = new Scanner(System.in);
 		System.out.print("Opción : ");
 		String option = myObj.nextLine();
+		long startTime = System.currentTimeMillis();
 
 		switch (option) {
 
@@ -99,6 +100,8 @@ public class Menu {
 
 		}
 
+		long elapsedTime = System.currentTimeMillis() - startTime;
+		System.out.println("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime + "\n");
 		mainMenu();
 
 	}

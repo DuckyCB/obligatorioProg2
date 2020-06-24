@@ -4,7 +4,6 @@ import exceptions.InvalidInformationException;
 import exceptions.KeyNotFoundException;
 
 import tads.interfaces.MyHash;
-import tads.nodes.HashEntry;
 import tads.nodes.HashNode;
 
 import java.util.Iterator;
