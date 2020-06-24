@@ -1,14 +1,16 @@
 package sortingAlgorithms;
 
-public class Sort<T extends Comparable<T>>{
+import entities.Tuple;
 
-    public void quicksort(T[] toOrder){
+public class Sort<K extends Comparable<K>, T>{
+
+    public void quicksort(Tuple<K, T>[] toOrder){
 
         rQuicksort(toOrder, 0, toOrder.length-1);
 
     }
 
-    private void rQuicksort(T[] toOrder, int low, int high){
+    private void rQuicksort(Tuple<K, T>[] toOrder, int low, int high){
 
         if (low< high){
 
@@ -22,15 +24,15 @@ public class Sort<T extends Comparable<T>>{
 
     }
 
-    private int posPiv(T[] toOrder, int low, int high){
+    private int posPiv(Tuple<K, T>[] toOrder, int low, int high){
 
-        T pivot= toOrder[high];
+        Tuple<K, T> pivot= toOrder[high];
 
         int i = (low -1);
 
         for( int j= low; j<= high-1; j++){
 
-            if (pivot.compareTo(toOrder[j])>0 ){
+            if (pivot.getKey().compareTo(toOrder[j].getKey())>0 ){
 
                 i++;
 
@@ -46,9 +48,9 @@ public class Sort<T extends Comparable<T>>{
 
     }
 
-    private void swap(T[] toOrder, int toChange1, int toChange2){
+    private void swap(Tuple<K, T>[] toOrder, int toChange1, int toChange2){
 
-        T oldMin= toOrder[toChange1];
+        Tuple<K, T> oldMin= toOrder[toChange1];
 
         toOrder[toChange1]= toOrder[toChange2];
 
