@@ -19,11 +19,12 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 	}
 
+
 	@Override
 	public void put(K key, T value) {
+
 		int attempt = 0;
 		int position = internalHashcodeWithCollision(key, attempt);
-
 		HashEntry<K, T> valueToInsert = new HashEntry<>(key, value);
 
 		while (hashTable[position] != null &&
@@ -36,10 +37,7 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 		}
 
-		if (attempt > hashTable.length) {
-
-			throw new RuntimeException("No se encontro lugar disponible");
-		}
+		if (attempt > hashTable.length) throw new RuntimeException("No se encontro lugar disponible");
 
 		if (hashTable[position] == null || hashTable[position].isRemoved()) {
 
@@ -48,15 +46,16 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 		} else { // Si sale por aca es porque ya existe un elemento en la clave con lo que hay que sustituir el valor
 
 			hashTable[position].setValue(value);
+
 		}
 
 		size++;
+
 	}
 
 	public static int getLinealCollisionFunction() {
 		return LINEAL_COLLISION_FUNCTION;
 	}
-
 	public static void setLinealCollisionFunction(int linealCollisionFunction) {
 		LINEAL_COLLISION_FUNCTION = linealCollisionFunction;
 	}
@@ -64,7 +63,6 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 	public HashEntry<K, T>[] getHashTable() {
 		return hashTable;
 	}
-
 	public void setHashTable(HashEntry<K, T>[] hashTable) {
 		this.hashTable = hashTable;
 	}
@@ -76,7 +74,6 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 	public int getDefaultCollisionFunction() {
 		return defaultCollisionFunction;
 	}
-
 	public void setDefaultCollisionFunction(int defaultCollisionFunction) {
 		this.defaultCollisionFunction = defaultCollisionFunction;
 	}
@@ -97,6 +94,7 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 
 	@Override
 	public T get(K key) {
+
 		int attempt = 0;
 		int position = internalHashcodeWithCollision(key, attempt);
 		T valueToReturn = null;
@@ -140,34 +138,31 @@ public class ClosedHash<K, T> implements MyHashIterable<K, T>, Iterable<T> {
 	}
 
 	private int internalHashcodeWithCollision(K key, int attempt) {
+
 		return (key.hashCode() + collisionFunction(attempt)) % hashTable.length;
+
 	}
 
 	private int collisionFunction(int i) {
-		int value = 0;
 
-		if (defaultCollisionFunction == LINEAL_COLLISION_FUNCTION) {
+		if (defaultCollisionFunction == LINEAL_COLLISION_FUNCTION) return i;
+		else return 0;
 
-			value = i;
-
-		}
-
-		return value;
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 
-		return new HashIterator(hashTable);
+		return new HashIteratorClosed(hashTable);
 
 	}
 
-	private class HashIterator implements Iterator<T> {
+	private class HashIteratorClosed implements Iterator<T> {
 
 		private HashEntry<K, T>[] hashTable;
 		private int index;
 
-		public HashIterator(HashEntry<K, T>[] hashTable) {
+		public HashIteratorClosed(HashEntry<K, T>[] hashTable) {
 
 			this.hashTable = hashTable;
 			this.index = 0;

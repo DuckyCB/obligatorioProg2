@@ -1,5 +1,6 @@
 package main;
 
+import dataBase.DataBase;
 import entities.*;
 import exceptions.EmptyQueueException;
 import exceptions.InvalidInformationException;
@@ -17,8 +18,9 @@ import java.util.Iterator;
 
 public class Quaries {
 
-	private static ClosedHash<Long, Book> books = UploadData.getBooks();
-	private static ClosedHash<Long, User> users = UploadData.getUsers();
+	private static ClosedHash<Long, Book> books = DataBase.books;
+	private static ClosedHash<Long, User> users = DataBase.users;
+	private static ClosedHash<Integer, Author> authors = DataBase.authors;
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden

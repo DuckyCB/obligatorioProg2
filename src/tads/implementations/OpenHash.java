@@ -4,9 +4,12 @@ import exceptions.InvalidInformationException;
 import exceptions.KeyNotFoundException;
 
 import tads.interfaces.MyHash;
+import tads.nodes.HashEntry;
 import tads.nodes.HashNode;
 
-public class OpenHash<K, T> implements MyHash<K, T> {
+import java.util.Iterator;
+
+public class OpenHash<K, T> implements MyHash<K, T> { // Iterable<T>
 
     private LinkedList<HashNode<K,T>>[] hash;
     private int size;
@@ -25,15 +28,12 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     public void put(K key, T value) throws InvalidInformationException {
 
         int place = key.hashCode() % hashSize;
-        if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
 
         if (toEvaluate == null){
 
-            toEvaluate = new LinkedList<>();
-            hash[place] = toEvaluate;
-            HashNode<K,T> toAdd = new HashNode<>(key, value);
-            toEvaluate.add(toAdd);
+            hash[place] = new LinkedList<>();
+            hash[place].add(new HashNode<>(key, value));
             size++;
 
         }else {
@@ -43,17 +43,14 @@ public class OpenHash<K, T> implements MyHash<K, T> {
 
             while (i < toEvaluate.size() && !found) {
 
-                HashNode<K, T> element = toEvaluate.get(i);
-
-                if (element.getKey().equals(key)) found = true;
+                if (toEvaluate.get(i).getKey().equals(key)) found = true;
                 else i++;
 
             }
 
             if (!found) {
 
-                HashNode<K,T> toAdd = new HashNode<>(key, value);
-                toEvaluate.add(toAdd);
+                toEvaluate.add(new HashNode<>(key, value));
                 size++;
 
             } else toEvaluate.get(i).setValue(value);
@@ -66,28 +63,23 @@ public class OpenHash<K, T> implements MyHash<K, T> {
     public T get(K key) throws KeyNotFoundException, InvalidInformationException {
 
         int place = key.hashCode() % hashSize ;
-        if (place >= hashSize) throw new InvalidInformationException();
         LinkedList<HashNode<K, T>> toEvaluate = hash[place];
-        if (toEvaluate == null)  throw new KeyNotFoundException();
+        if (toEvaluate == null) throw new KeyNotFoundException();
         int i=0;
-        HashNode<K, T> toReturn = null;
-        boolean found=false;
 
-        while (i<toEvaluate.size() && !found) {
+        while (i < toEvaluate.size()) {
 
             HashNode<K, T> element = toEvaluate.get(i);
 
             if (element.getKey().equals(key)) {
 
-                found = true;
-                toReturn= toEvaluate.goToPosition(i).getValue();
+                return element.getValue();
 
             } else i++;
 
         }
 
-        if (!found) throw new KeyNotFoundException();
-        return toReturn.getValue();
+        throw new KeyNotFoundException();
 
     }
 
@@ -97,4 +89,44 @@ public class OpenHash<K, T> implements MyHash<K, T> {
         return size;
 
     }
+
+    /*@Override
+    public Iterator<T> iterator() {
+
+        return new HashIteratorOpen(hash);
+
+    }
+
+    private class HashIteratorOpen implements Iterator<T> {
+
+        private LinkedList<HashNode<K,T>>[] hashTable;
+        private int indexTable;
+        private int indexList;
+
+        public HashIteratorOpen(LinkedList<HashNode<K,T>>[] hashTable) {
+
+            this.hashTable = hashTable;
+            this.indexTable = 0;
+            this.indexList = 0;
+
+        }
+
+        @Override
+        public boolean hasNext() {
+
+            while (indexTable != hashTable.length && hashTable[indexTable] == null) indexTable++;
+            return indexTable != hashTable.length;
+
+        }
+
+        @Override
+        public T next() {
+
+            //if
+            return hashTable[indexTable++].get(0);
+
+        }
+
+    }*/
+
 }

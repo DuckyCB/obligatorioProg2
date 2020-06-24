@@ -4,7 +4,9 @@ import tads.interfaces.MyList;
 import tads.nodes.Node;
 import exceptions.InvalidInformationException;
 
-public class LinkedList<T> implements MyList<T> {
+import java.util.Iterator;
+
+public class LinkedList<T> implements MyList<T> { // Iterable<T>
 
 	private Node<T> first;
 	private int size=0;
@@ -12,6 +14,7 @@ public class LinkedList<T> implements MyList<T> {
 	public Node<T> goToPosition(int position) throws InvalidInformationException {
 
 		if (first == null) throw new InvalidInformationException();
+
 		Node<T> node = first;
 
 		for (int i = 0; i < position; i++) {
@@ -94,5 +97,38 @@ public class LinkedList<T> implements MyList<T> {
 		return size;
 
 	}
+
+
+	/*@Override
+	public Iterator<T> iterator() {
+		return new LinkedListIterator<>(first);
+	}
+
+	private class LinkedListIterator<T> implements Iterator<T> {
+
+		private Node<T> node;
+
+		public LinkedListIterator(Node<T> node) {
+
+			this.node = node;
+
+		}
+
+		@Override
+		public boolean hasNext() {
+
+			return (node != null);
+
+		}
+
+		@Override
+		public T next() {
+
+			T valueToReturn = node.getValue();
+			node = node.getNext();
+			return valueToReturn;
+
+		}
+	}*/
 
 }

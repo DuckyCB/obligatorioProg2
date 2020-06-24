@@ -1,5 +1,6 @@
 package main;
 
+import dataBase.DataBase;
 import entities.Author;
 import entities.Book;
 import entities.Rating;
@@ -13,8 +14,9 @@ import java.nio.file.Paths;
 
 public class UploadData {
 
-	private static ClosedHash<Long, Book> books = new ClosedHash<>(10001);
-	private static ClosedHash<Long, User> users = new ClosedHash<>(60000);
+	private static ClosedHash<Long, Book> books = DataBase.books;
+	private static ClosedHash<Long, User> users = DataBase.users;
+	private static ClosedHash<Integer, Author> authors = DataBase.authors;
 
 	public static void timeDataLoad() {
 
@@ -33,14 +35,6 @@ public class UploadData {
 		// ESTO PUEDE HACER EXPLOTAR TOD0
 		System.gc();
 
-	}
-
-	public static ClosedHash<Long, Book> getBooks() {
-		return books;
-	}
-
-	public static ClosedHash<Long, User> getUsers() {
-		return users;
 	}
 
 
@@ -89,12 +83,13 @@ public class UploadData {
 
 		int n = attributes.length;
 
-		Author[] authorsArray = new Author[n - 7];
+		int[] authorsArray = new int[n - 7];
 
 		for (int i = 0; i < n - 7; i++) {
 
 			Author newAuthor = new Author(attributes[2 + i]);
-			authorsArray[i] = newAuthor;
+			authors.put(newAuthor.hashCode(), newAuthor);
+			authorsArray[i] = newAuthor.hashCode();
 
 		}
 

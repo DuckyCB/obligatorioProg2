@@ -21,15 +21,10 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 	public void enqueue(T element) {
 
 		Node<T> newNode = new Node<>(element, null);
-
 		if (isEmpty()) first = newNode;
 		else last.setNext(newNode);
-
-		}
-
 		last = newNode;
-
-		size=size+1;
+		size++;
 
 	}
 

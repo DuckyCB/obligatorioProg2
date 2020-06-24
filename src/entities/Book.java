@@ -6,7 +6,7 @@ public class Book{
 
 	private long book_id;
 	private String isbn;
-	private Author[] authors;
+	private int[] authors;
 	private QueueLinkedList<User> reservationUsers;
 	private QueueLinkedList<User> rankedUsers;
 	private int original_publication_year;
@@ -15,7 +15,7 @@ public class Book{
 	private String language_code;
 	private String image_url;
 
-	public Book(long book_id, String isbn, Author[] authors, int original_publication_year,
+	public Book(long book_id, String isbn, int[] authors, int original_publication_year,
 				String original_title, String title, String language_code, String image_url) {
 
 		this.book_id = book_id;
@@ -45,10 +45,10 @@ public class Book{
 		this.isbn = isbn;
 	}
 
-	public Author[] getAuthors() {
+	public int[] getAuthors() {
 		return authors;
 	}
-	public void setAuthors(Author[] authors) {
+	public void setAuthors(int[] authors) {
 		this.authors = authors;
 	}
 
