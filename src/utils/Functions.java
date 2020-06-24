@@ -24,77 +24,78 @@ public class Functions {
 
 	}
 
-	public static void addToLangage(String lang, Tuple<Integer, String>[] languages) {
+	public static void addToLangage(String lang, Tuple<Integer, String>[] languages, int number) {
 
+		System.out.println(lang);
 		switch (lang) {
 			case "eng":
 			case "en":
 			case "en-CA":
 			case "en-GB":
 			case "en-US":
-				languages[0].setKey(languages[0].getKey() + 1);
+				languages[0].setKey(languages[0].getKey() + number);
+				System.out.println("entro");
 				break;
 			case "ara":
-				languages[1].setKey(languages[1].getKey() + 1);
+				languages[1].setKey(languages[1].getKey() + number);
 				break;
 			case "dan":
-				languages[2].setKey(languages[2].getKey() + 1);
+				languages[2].setKey(languages[2].getKey() + number);
 				break;
 			case "fil":
-				languages[3].setKey(languages[3].getKey() + 1);
+				languages[3].setKey(languages[3].getKey() + number);
 				break;
 			case "fre":
-				languages[4].setKey(languages[4].getKey() + 1);
+				languages[4].setKey(languages[4].getKey() + number);
 				break;
 			case "ger":
-				languages[5].setKey(languages[5].getKey() + 1);
+				languages[5].setKey(languages[5].getKey() + number);
 				break;
 			case "ind":
-				languages[6].setKey(languages[6].getKey() + 1);
+				languages[6].setKey(languages[6].getKey() + number);
 				break;
 			case "ita":
-				languages[7].setKey(languages[7].getKey() + 1);
+				languages[7].setKey(languages[7].getKey() + number);
 				break;
 			case "jpn":
-				languages[8].setKey(languages[8].getKey() + 1);
+				languages[8].setKey(languages[8].getKey() + number);
 				break;
 			case "mul":
-				languages[9].setKey(languages[9].getKey() + 1);
+				languages[9].setKey(languages[9].getKey() + number);
 				break;
 			case "nl":
-				languages[10].setKey(languages[10].getKey() + 1);
+				languages[10].setKey(languages[10].getKey() + number);
 				break;
 			case "nor":
-				languages[11].setKey(languages[11].getKey() + 1);
+				languages[11].setKey(languages[11].getKey() + number);
 				break;
 			case "per":
-				languages[12].setKey(languages[12].getKey() + 1);
+				languages[12].setKey(languages[12].getKey() + number);
 				break;
 			case "pol":
-				languages[13].setKey(languages[13].getKey() + 1);
+				languages[13].setKey(languages[13].getKey() + number);
 				break;
 			case "por":
-				languages[14].setKey(languages[14].getKey() + 1);
+				languages[14].setKey(languages[14].getKey() + number);
 				break;
 			case "rum":
-				languages[15].setKey(languages[15].getKey() + 1);
+				languages[15].setKey(languages[15].getKey() + number);
 				break;
 			case "rus":
-				languages[16].setKey(languages[16].getKey() + 1);
+				languages[16].setKey(languages[16].getKey() + number);
 				break;
 			case "spa":
-				languages[17].setKey(languages[17].getKey() + 1);
+				languages[17].setKey(languages[17].getKey() + number);
 				break;
 			case "swe":
-				languages[18].setKey(languages[18].getKey() + 1);
+				languages[18].setKey(languages[18].getKey() + number);
 				break;
 			case "tur":
-				languages[19].setKey(languages[19].getKey() + 1);
+				languages[19].setKey(languages[19].getKey() + number);
 				break;
 			case "vie":
-				languages[20].setKey(languages[20].getKey() + 1);
+				languages[20].setKey(languages[20].getKey() + number);
 				break;
-
 		}
 
 	}

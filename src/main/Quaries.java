@@ -1,9 +1,6 @@
 package main;
 
-import entities.Book;
-import entities.Rating;
-import entities.Tuple;
-import entities.User;
+import entities.*;
 import exceptions.EmptyQueueException;
 import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
@@ -175,10 +172,9 @@ public class Quaries {
 		- Codigo del idioma
 		- Cantidad */
 
-		// Verificar que no se guarde el nan
 		Tuple<Integer, String>[] topRatings = Functions.createLangArray();
 
-		for (User user : users) {
+		/*for (User user : users) {
 
 			QueueLinkedList<Book> list = user.getReservations();
 			for (int n = 0; n < list.size(); n++) {
@@ -194,6 +190,12 @@ public class Quaries {
 				}
 
 			}
+
+		}*/
+
+		for (Book book: books) {
+
+			Functions.addToLangage(book.getLanguage_code(), topRatings, book.getReservationUsers().size());
 
 		}
 
@@ -222,9 +224,21 @@ public class Quaries {
 		- Cantidad */
 
 		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
+		ClosedHash<String, Tuple<Integer, Integer>> authors = new ClosedHash<>(20000);
 
-		for (User user : users) {
+		for (Book book: books) {
 
+			for (int i = 0; i < book.getAuthors().length; i++) {
+
+				try {
+
+					authors.put(book.getAuthors()[i].getName(), new Tuple<>());
+
+				} catch (Exception e) {
+
+				}
+
+			}
 
 		}
 
