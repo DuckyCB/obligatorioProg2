@@ -29,56 +29,42 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		HeapImp<Long, Integer> topTen = new HeapImp<>(10001, 1);
-		ClosedHash<Long, Book> hash = new ClosedHash<>(10001);
-		//	vas a ahcer un heap y cada vez qeu aprece el libro le sumas uno a la key
-		NodeBT<Integer,  Book>[] allBooks= new NodeBT[books.getSize()];
+		Tuple<Integer, Book>[] booksReservation= new Tuple[books.getSize()];
 
-		int pos=0;
-		for (Book book: books) {
+		int i=0;
 
-			int reservations=0;
+		for(Book book: books) {
 
-			for(User user: users){
+			int reservas= book.getReservationUsers().size();
 
-				QueueLinkedList<Book> bookReserved= user.getReservations();
+			Tuple<Integer, Book> toAdd= new Tuple<>(reservas,book);
 
-				if(bookReserved.dequeue().getBook_id()== book.getBook_id()){
+			booksReservation[i]	= toAdd;
 
-					reservations= reservations+1;
-
-				}
-
-			}
-
-			NodeBT<Integer,  Book> toAdd= new NodeBT(reservations,book);
-
-			allBooks[pos]= toAdd;
-
-			pos= pos+1;
+			i++;
 
 		}
-		//Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		Sort toSort= new Sort();
 
-		//toSort.quicksort(allBooks);
+		toSort.quicksort(booksReservation);
 
-		int posToPrint= allBooks.length;
+		int posToPrint= booksReservation.length;
 
-		for(int i= 0; i<10; i++){
+		int j=0;
 
-			System.out.println("Id del libro: "+ allBooks[posToPrint-1].getData().getBook_id());
+		while( j<10){
 
-			System.out.println("Titulo: "+ allBooks[posToPrint-1].getData().getOriginal_title());
+			System.out.println("Id del libro: "+ booksReservation[posToPrint-1].getValue().getBook_id());
 
-			System.out.println("Cantidad: " + allBooks[posToPrint-1].getKey());
+			System.out.println("Titulo: "+ booksReservation[posToPrint-1].getValue().getOriginal_title());
+
+			System.out.println("Cantidad: " + booksReservation[posToPrint-1].getKey());
 
 			posToPrint=posToPrint-1;
+
+			j++;
+
 		}
-
-
-
-
-
 
 
 
@@ -94,67 +80,33 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		// tengo en books y users todos los books y users
+		Tuple<Integer, Book>[] booksWRating= new Tuple[books.getSize()];
 
-		NodeBT<Integer, Book>[] booksWRating = new NodeBT[books.getSize()]; // donde se guardaran los libros
+		int i=0;
 
-		int pos=0; // posicion a guardar en el vector!
+		for(Book book: books){
 
-		for(Book book:books){
+			int ratings= book.getRankedUsers().size();
 
-			boolean found = false;
+			Tuple<Integer, Book> toAdd= new Tuple<>(ratings,book);
 
-			int times = -1; // cant de reseñas de toCompare, empieza en -1 para que no cuente la misma dos veces
+			booksWRating[i]	= toAdd;
 
-			for (User user: users){
-
-				//hasta aca llega
-
-				QueueLinkedList<Rating> ratings= user.getRatings(); // todos los ratings del user
-
-				for (int i = 0; i < ratings.size(); i++) {
-
-					Book ratingBook = ratings.dequeue().getBook();
-
-					if(ratingBook.getBook_id()== book.getBook_id()){
-
-						times = times + 1;
-
-						found = true;
-
-					}
-
-				}
-
-				if(found==true && times!=0){
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(times, book);
-
-					booksWRating[pos]= toAdd;
-
-				}else{
-
-					NodeBT<Integer, Book> toAdd=  new NodeBT<>(0, book);
-
-					booksWRating[pos]= toAdd;
-				}
-
-			}
-
-			pos=pos+1;
+			i++;
 
 		}
 
-		//Sort<NodeBT<Integer,Book>> toSort= new Sort<>();
+		Sort toSort= new Sort();
 
 		//toSort.quicksort(booksWRating);
 
 		int posToPrint= booksWRating.length;
 
-		for(int i= 0; i<10; i++){
+		for(int j= 0; j<10; j++){
 
-			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getData().getBook_id());
+			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getValue().getBook_id());
 
-			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getData().getOriginal_title());
+			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getValue().getOriginal_title());
 
 			System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
 
