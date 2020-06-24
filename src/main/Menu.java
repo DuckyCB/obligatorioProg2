@@ -60,7 +60,7 @@ public class Menu {
 		System.out.println(" 4. Indicar el Top 5 de los idiomas asociados a libros que han tenido más\n" +
 				"reservas.");
 		System.out.println(" 5. Indicar el Top 20 de autores que más publicaciones han hecho por año.");
-		System.out.println(" 6. Salir.");
+		System.out.println(" 6. Salir.\n");
 
 		Scanner myObj = new Scanner(System.in);
 		System.out.print("Opción : ");
@@ -102,6 +102,9 @@ public class Menu {
 
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		System.out.println("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime + "\n");
+
+		System.gc();
+
 		mainMenu();
 
 	}

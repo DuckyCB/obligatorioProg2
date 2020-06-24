@@ -7,8 +7,8 @@ public class Book{
 	private long book_id;
 	private String isbn;
 	private int[] authors;
-	private QueueLinkedList<User> reservationUsers;
-	private QueueLinkedList<User> rankedUsers;
+	private QueueLinkedList<User> reservation;
+	private QueueLinkedList<Integer> ratings;
 	private int original_publication_year;
 	private String original_title;
 	private String title;
@@ -21,8 +21,8 @@ public class Book{
 		this.book_id = book_id;
 		this.isbn = isbn;
 		this.authors = authors;
-		this.reservationUsers = new QueueLinkedList<>();
-		this.rankedUsers = new QueueLinkedList<>();
+		this.reservation = new QueueLinkedList<>();
+		this.ratings = new QueueLinkedList<>();
 		this.original_publication_year = original_publication_year;
 		this.original_title = original_title;
 		this.title = title;
@@ -52,18 +52,18 @@ public class Book{
 		this.authors = authors;
 	}
 
-	public QueueLinkedList<User> getReservationUsers() {
-		return reservationUsers;
+	public QueueLinkedList<User> getReservation() {
+		return reservation;
 	}
-	public void setReservationUsers(QueueLinkedList<User> reservationUsers) {
-		this.reservationUsers = reservationUsers;
+	public void setReservation(QueueLinkedList<User> reservation) {
+		this.reservation = reservation;
 	}
 
-	public QueueLinkedList<User> getRankedUsers() {
-		return rankedUsers;
+	public QueueLinkedList<Integer> getRatings() {
+		return ratings;
 	}
-	public void setRankedUsers(QueueLinkedList<User> rankedUsers) {
-		this.rankedUsers = rankedUsers;
+	public void setRatings(QueueLinkedList<Integer> ratings) {
+		this.ratings = ratings;
 	}
 
 	public int getOriginal_publication_year() {

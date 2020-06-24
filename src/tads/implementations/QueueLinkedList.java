@@ -12,7 +12,7 @@ public class QueueLinkedList<T> implements MyQueue<T> {
 
 	public QueueLinkedList(){
 
-		this.size=0;
+		this.size = 0;
 
 	}
 

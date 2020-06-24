@@ -5,7 +5,7 @@ import tads.implementations.QueueLinkedList;
 public class User {
 
 	private long user_id;
-	private QueueLinkedList<Rating> ratings;
+	private QueueLinkedList<Integer> ratings;
 	private QueueLinkedList<Book> reservations;
 
 	public User(long user_id) {
@@ -23,10 +23,10 @@ public class User {
 		this.user_id = user_id;
 	}
 
-	public QueueLinkedList<Rating> getRatings() {
+	public QueueLinkedList<Integer> getRatings() {
 		return ratings;
 	}
-	public void setRatings(QueueLinkedList<Rating> ratings) {
+	public void setRatings(QueueLinkedList<Integer> ratings) {
 		this.ratings = ratings;
 	}
 
@@ -36,4 +36,5 @@ public class User {
 	public void setReservations(QueueLinkedList<Book> reservations) {
 		this.reservations = reservations;
 	}
+
 }

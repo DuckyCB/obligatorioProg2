@@ -17,6 +17,7 @@ public class UploadData {
 	private static ClosedHash<Long, Book> books = DataBase.books;
 	private static ClosedHash<Long, User> users = DataBase.users;
 	private static ClosedHash<Integer, Author> authors = DataBase.authors;
+	private static ClosedHash<Integer, Rating> ratings = DataBase.ratings;
 
 	public static void timeDataLoad() {
 
@@ -30,7 +31,7 @@ public class UploadData {
 		readFromCSV("to_read.csv");
 
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		System.out.println("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime);
+		System.out.println("Carga de datos exitosa, tiempo de ejecución de la carga : " + elapsedTime + "\n");
 
 		// ESTO PUEDE HACER EXPLOTAR TOD0
 		System.gc();
@@ -114,21 +115,26 @@ public class UploadData {
 
 	private static void saveRating(String[] attributes) {
 
-		Rating newRating = new Rating(Integer.parseInt(attributes[1]),
-				books.get(Long.parseLong(attributes[2])));
+		for (int i = 0; i < 5; i++) {
+
+			Rating rating = new Rating(i);
+			ratings.put(i, rating);
+
+		}
+
 		User user = new User(Long.parseLong(attributes[0]));
 		users.put(Long.parseLong(attributes[0]), user);
-		user.getRatings().enqueue(newRating);
-		books.get(Long.parseLong(attributes[2])).getRankedUsers().enqueue(user);
+		user.getRatings().enqueue(Integer.parseInt(attributes[1]));
+		books.get(Long.parseLong(attributes[2])).getRatings().enqueue(Integer.parseInt(attributes[1]));
 
 	}
 
 	private static void saveToRead(String[] attributes) {
 
-		User user = users.get(Long.parseLong(attributes[0]));
-		Book book = books.get(Long.parseLong(attributes[1]));
-		user.getReservations().enqueue(book);
-		book.getReservationUsers().enqueue(user);
+		books.get(Long.parseLong(attributes[1])).getReservation().
+				enqueue(users.get(Long.parseLong(attributes[0])));
+		users.get(Long.parseLong(attributes[0])).getReservations().
+				enqueue(books.get(Long.parseLong(attributes[1])));
 
 	}
 

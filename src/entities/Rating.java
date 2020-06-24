@@ -3,12 +3,10 @@ package entities;
 public class Rating {
 
 	private int rating;
-	private Book book;
 
-	public Rating(int rating, Book book) {
+	public Rating(int rating) {
 
 		this.rating = rating;
-		this.book = book;
 
 	}
 
@@ -19,10 +17,4 @@ public class Rating {
 		this.rating = rating;
 	}
 
-	public Book getBook() {
-		return book;
-	}
-	public void setBook(Book book) {
-		this.book = book;
-	}
 }

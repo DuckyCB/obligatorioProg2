@@ -2,25 +2,18 @@ package main;
 
 import dataBase.DataBase;
 import entities.*;
-import exceptions.EmptyQueueException;
-import exceptions.InvalidInformationException;
 import sortingAlgorithms.Sort;
-import tads.nodes.HashEntry;
-import tads.nodes.Node;
-import tads.nodes.NodeBT;
 import tads.implementations.*;
-import tads.nodes.HashNode;
-import tads.nodes.NodeHeap;
 import utils.Functions;
 
 import java.text.DecimalFormat;
-import java.util.Iterator;
 
 public class Quaries {
 
 	private static ClosedHash<Long, Book> books = DataBase.books;
 	private static ClosedHash<Long, User> users = DataBase.users;
 	private static ClosedHash<Integer, Author> authors = DataBase.authors;
+	private static ClosedHash<Integer, Rating> ratings = DataBase.ratings;
 
 	public static void top10Books() {
 		/* Tomando en cuenta los libros y las reservas que los usuarios pueden
@@ -31,32 +24,25 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		Tuple<Integer, Book>[] booksReservation= new Tuple[books.getSize()];
+		int size = books.getSize();
+		Tuple<Integer, Book>[] booksReservation = new Tuple[size];
 
 		int i=0;
 
 		for(Book book: books) {
 
-			int reservas= book.getReservationUsers().size();
-
-			Tuple<Integer, Book> toAdd= new Tuple<>(reservas,book);
-
-			booksReservation[i]	= toAdd;
-
+			booksReservation[i]	= new Tuple<>(book.getReservation().size(), book);
 			i++;
 
 		}
-		Sort toSort= new Sort();
 
-		toSort.quicksort(booksReservation);
+		Sort.quicksort(booksReservation);
 
-		int posToPrint= booksReservation.length;
+		for (int n = 1; n < 11; n++) {
 
-		for (int n = 9; n >= 0; n--) {
-
-			System.out.println("Id del libro: " + booksReservation[n].getValue().getBook_id());
-			System.out.println("Titulo: " + booksReservation[n].getValue().getOriginal_title());
-			System.out.println("Cantidad: " + booksReservation[n].getKey() + "\n");
+			System.out.println("Id del libro: " + booksReservation[size-n].getValue().getBook_id());
+			System.out.println("Titulo: " + booksReservation[size-n].getValue().getTitle());
+			System.out.println("Cantidad: " + booksReservation[size-n].getKey() + "\n");
 
 		}
 
@@ -72,37 +58,26 @@ public class Quaries {
 		- Titulo
 		- Cantidad */
 
-		Tuple<Integer, Book>[] booksWRating= new Tuple[books.getSize()];
+		int size = books.getSize();
+		Tuple<Integer, Book>[] booksWRating = new Tuple[size];
 
 		int i=0;
 
 		for(Book book: books){
 
-			int ratings= book.getRankedUsers().size();
-
-			Tuple<Integer, Book> toAdd= new Tuple<>(ratings,book);
-
-			booksWRating[i]	= toAdd;
-
+			booksWRating[i]	= new Tuple<>(book.getRatings().size(), book);
 			i++;
 
 		}
 
-		Sort toSort= new Sort();
+		Sort.quicksort(booksWRating);
 
-		//toSort.quicksort(booksWRating);
+		for (int n = 1; n < 21 ; n++){
 
-		int posToPrint= booksWRating.length;
+			System.out.println("Id del libro: " + booksWRating[size-n].getValue().getBook_id());
+			System.out.println("Titulo: " + booksWRating[size-n].getValue().getTitle());
+			System.out.println("Cantidad: " + booksWRating[size-n].getKey() + "\n");
 
-		for(int j= 0; j<10; j++){
-
-			System.out.println("Id del libro: "+ booksWRating[posToPrint-1].getValue().getBook_id());
-
-			System.out.println("Titulo: "+ booksWRating[posToPrint-1].getValue().getOriginal_title());
-
-			System.out.println("Cantidad: " + booksWRating[posToPrint-1].getKey());
-
-			posToPrint=posToPrint-1;
 		}
 
 	}
@@ -118,29 +93,36 @@ public class Quaries {
 		- Cantidad
 		- Rating promedio */
 
-		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
+		// HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
+		Tuple<Float, User>[] topUsers = new Tuple[100000];
+
+		int i = 0;
 
 		for (User user : users) {
 
-			top.insert(user.getRatings().size(), user);
+			// top.insert(user.getRatings().size(), user);
+			topUsers[i] = new Tuple(user.getReservations().size(), user);
+			i++;
 
 		}
 
+		Sort.quicksort(topUsers);
+
 		Tuple<Float, User>[] topRatings = new Tuple[10];
 
-		for (int i = 0; i < 10; i++) {
+		for (int n = 1; n < 11; n++) {
 
-			User userTemp = top.deleteAndReturn().getData();
+			User userTemp = topUsers[topUsers.length - n].getValue();
 			float average = Functions.linkedListAverage(userTemp.getRatings());
-			topRatings[i] = new Tuple(average, top.deleteAndReturn());
+			topRatings[n-1] = new Tuple(average, userTemp);
 
 		}
 
 		Sort.quicksort(topRatings);
 
-		for (int i = 9; i >= 0; i--) {
+		for (int n = 9; n >= 0; n--) {
 
-			User userTemp = topRatings[i].getValue();
+			User userTemp = topRatings[n].getValue();
 			System.out.println("ID del usuario: " + userTemp.getUser_id());
 			System.out.println("Cantidad: " + userTemp.getRatings().size());
 			DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -185,7 +167,7 @@ public class Quaries {
 
 		for (Book book: books) {
 
-			Functions.addToLangage(book.getLanguage_code(), topRatings, book.getReservationUsers().size());
+			Functions.addToLanguage(book.getLanguage_code(), topRatings, book.getReservation().size());
 
 		}
 

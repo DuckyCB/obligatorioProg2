@@ -1,5 +1,6 @@
 package utils;
 
+import dataBase.DataBase;
 import entities.Rating;
 import entities.Tuple;
 import exceptions.EmptyQueueException;
@@ -7,15 +8,15 @@ import tads.implementations.QueueLinkedList;
 
 public class Functions {
 
-	public static float linkedListAverage(QueueLinkedList<Rating> list) throws EmptyQueueException {
+	public static float linkedListAverage(QueueLinkedList<Integer> list) throws EmptyQueueException {
 
 		long summation = 0;
 		int n = list.size();
 
 		for (int i = 0; i < n; i++) {
 
-			Rating rating = list.dequeue();
-			summation += rating.getRating();
+			Integer rating = list.dequeue();
+			summation += DataBase.ratings.get(rating).getRating();
 			list.enqueue(rating);
 
 		}
@@ -24,7 +25,7 @@ public class Functions {
 
 	}
 
-	public static void addToLangage(String lang, Tuple<Integer, String>[] languages, int number) {
+	public static void addToLanguage(String lang, Tuple<Integer, String>[] languages, int number) {
 
 		switch (lang) {
 			case "eng":

@@ -26,18 +26,20 @@ public class Sort{
 
     private static <K extends Comparable<K>, T> int posPiv(Tuple<K, T>[] toOrder, int low, int high){
 
-        Tuple<K, T> pivot= toOrder[high];
+        Tuple<K, T> pivot = toOrder[high];
 
-        int i = (low -1);
+        int i = (low - 1);
 
-        for( int j= low; j<= high-1; j++){
+        for ( int j = low; j <= high - 1; j++){
 
-            if (pivot.getKey().compareTo(toOrder[j].getKey())>0 ){
+            if (pivot != null && toOrder[j] != null) { // Agregue esto a ver si se arregla
+                if (pivot.getKey().compareTo(toOrder[j].getKey()) > 0) {
 
-                i++;
+                    i++;
 
-                swap(toOrder, i , j);
+                    swap(toOrder, i, j);
 
+                }
             }
 
         }
