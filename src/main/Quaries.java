@@ -44,7 +44,7 @@ public class Quaries {
 			i++;
 
 		}
-		Sort<Integer,Book> toSort= new Sort<>();
+		Sort toSort= new Sort();
 
 		toSort.quicksort(booksReservation);
 
@@ -96,7 +96,7 @@ public class Quaries {
 
 		}
 
-		Sort<Integer,Book> toSort= new Sort<>();
+		Sort toSort= new Sort();
 
 		toSort.quicksort(booksWRating);
 
