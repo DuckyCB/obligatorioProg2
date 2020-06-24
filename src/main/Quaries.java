@@ -94,17 +94,23 @@ public class Quaries {
 		- Rating promedio */
 
 		// HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
-		Tuple<Float, User>[] topUsers = new Tuple[100000];
+		Tuple<Float, User>[] topUsers = new Tuple[users.getSize()];
 
 		int i = 0;
+
 
 		for (User user : users) {
 
 			// top.insert(user.getRatings().size(), user);
-			topUsers[i] = new Tuple(user.getReservations().size(), user);
+			if(user.getRatings()==null){
+				topUsers[i] = new Tuple(0, user);
+			}else {
+				topUsers[i] = new Tuple(user.getRatings().size(), user);
+			}
 			i++;
-
 		}
+
+
 
 		Sort.quicksort(topUsers);
 
@@ -193,6 +199,21 @@ public class Quaries {
 		- Autor
 		- Año de publicacion
 		- Cantidad */
+
+		QueueLinkedList<Tuple<Integer, Author>> forYear= new QueueLinkedList();
+
+		int totalSize=0; // me va a dar un mega vector
+
+		for (Book book:books){
+
+			//String[] allAuthors= book.getAuthors();// mal los autores?
+
+
+
+
+		}
+
+		//
 
 		HeapImp<Integer, User> top = new HeapImp<>(100000, 1);
 		ClosedHash<String, Tuple<Integer, Integer>> authors = new ClosedHash<>(20000);
